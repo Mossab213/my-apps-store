@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جميع التطبيقات - متجر تطبيقاتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2977/2977985.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-content {
+            flex: 1;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* رأس الموقع */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 5px;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        /* رأس الصفحة */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.1;
+        }
+        
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* قسم التطبيقات */
+        .apps-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .apps-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .app-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .app-image {
+            height: 200px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        
+        .app-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .app-card:hover .app-image img {
+            transform: scale(1.05);
+        }
+        
+        .app-info {
+            padding: 20px;
+        }
+        
+        .app-category {
+            display: inline-block;
+            background-color: #f1f8ff;
+            color: var(--secondary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .app-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .app-description {
+            color: #666;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+        
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .app-version {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            opacity: 0.8;
+            transition: all 0.3s;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            padding-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* شريط البحث */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            padding-right: 50px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            pointer-events: none;
+        }
+        
+        /* العلامة المائية للمشرف */
+        .admin-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* زر القائمة المتنقلة */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* التنبيهات */
+        .alert {
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .close-alert {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-alert:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+        
+        /* لا توجد تطبيقات */
+        .no-apps {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .no-apps i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        .no-apps h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        /* شريط التقدم للتحميل */
+        .download-progress {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .download-progress-bar {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* تأثيرات */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* أزرار العودة */
+        .back-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* عرض التحميل */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* التنقل بين الصفحات */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .page-item {
+            display: inline-block;
+        }
+        
+        .page-link {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            transition: all 0.3s;
+            display: block;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .page-link:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .page-link.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .page-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-link.disabled:hover {
+            background-color: white;
+            color: #333;
+            border-color: #ddd;
+        }
+        
+        /* الإحصائيات */
+        .apps-stats {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <!-- رأس الموقع -->
+        <header>
+            <div class="container header-container">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span id="siteName">متجر تطبيقاتي</span>
+                </div>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="apps.html" class="active">التطبيقات</a></li>
+                        <li><a href="about.html">حول</a></li>
+                        <li><a href="contact.html">اتصل بي</a></li>
+                    </ul>
+                    <div class="auth-buttons">
+                        <span class="admin-badge">المشرف</span>
+                        <a href="admin.html" class="btn btn-primary">
+                            <i class="fas fa-cog"></i> لوحة التحكم
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- رأس الصفحة -->
+        <section class="page-header">
+            <div class="container">
+                <h1>جميع التطبيقات</h1>
+                <p id="pageDescription">استعرض كل تطبيقاتي المتاحة للتحميل المجاني. يمكنك البحث والتصفية حسب النوع</p>
+            </div>
+        </section>
+
+        <!-- قسم التطبيقات -->
+        <section class="apps-section">
+            <div class="container">
+                <!-- الإحصائيات -->
+                <div class="apps-stats" id="appsStats" style="display: none;">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalAppsCount">0</div>
+                        <div class="stat-label">إجمالي التطبيقات</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalDownloadsCount">0</div>
+                        <div class="stat-label">إجمالي التحميلات</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="categoriesCount">0</div>
+                        <div class="stat-label">فئة</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="activeAppsCount">0</div>
+                        <div class="stat-label">تطبيقات نشطة</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-box" id="searchBox" placeholder="ابحث عن تطبيق بالاسم أو الوصف أو المطور...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                
+                <div class="apps-filter">
+                    <button class="filter-btn active" data-filter="all">الكل</button>
+                    <button class="filter-btn" data-filter="productivity">الإنتاجية</button>
+                    <button class="filter-btn" data-filter="design">التصميم</button>
+                    <button class="filter-btn" data-filter="multimedia">الوسائط</button>
+                    <button class="filter-btn" data-filter="utility">الأدوات</button>
+                    <button class="filter-btn" data-filter="games">الألعاب</button>
+                    <button class="filter-btn" data-filter="featured">المميزة</button>
+                </div>
+                
+                <div id="loadingApps" class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>جاري تحميل التطبيقات...</p>
+                </div>
+                
+                <div class="apps-grid" id="appsGrid" style="display: none;">
+                    <!-- سيتم ملء التطبيقات ديناميكيًا بواسطة JavaScript -->
+                </div>
+                
+                <div id="noApps" class="no-apps" style="display: none;">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>لا توجد تطبيقات</h3>
+                    <p>لا توجد تطبيقات متاحة حالياً. جرب تصفية أخرى أو قم بالبحث</p>
+                </div>
+                
+                <!-- تنقل الصفحات -->
+                <div class="pagination" id="pagination" style="display: none;"></div>
+                
+                <div class="back-home">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i> العودة للرئيسية
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 id="footerSiteName">عن المتجر</h3>
+                    <p id="footerDescription">هذا الموقع هو المتجر الرسمي لتطبيقاتي التي قمت بتطويرها. أنا المطور الوحيد والمشرف على هذا الموقع.</p>
+                    <div class="social-links">
+                        <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="لينكدإن"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="جيت هاب"><i class="fab fa-github"></i></a>
+                        <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="apps.html"><i class="fas fa-mobile-alt"></i> جميع التطبيقات</a></li>
+                        <li><a href="about.html"><i class="fas fa-user"></i> حول المطور</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بي</a></li>
+                        <li><a href="admin.html"><i class="fas fa-cog"></i> لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">contact@example.com</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> الجزائر</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">
+                        جميع التطبيقات مجانية وآمنة للاستخدام
+                    </p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span> <span id="copyrightSiteName">متجر تطبيقاتي</span>. تم التطوير بواسطتي.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نموذج تفاصيل التطبيق -->
+    <div id="appDetailModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; padding: 20px;">
+        <div class="container" style="max-width: 900px;">
+            <div style="background-color: white; border-radius: var(--radius); padding: 40px; position: relative;">
+                <button id="closeDetailModal" style="position: absolute; left: 20px; top: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #777; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="appDetailContent">
+                    <!-- سيتم ملء محتوى تفاصيل التطبيق هنا -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API URL
+        const API_URL = 'api_apps.php';
+        
+        // حالات التطبيق
+        let apps = [];
+        let categories = [];
+        let currentFilter = 'all';
+        let currentPage = 1;
+        let totalPages = 1;
+        let searchQuery = '';
+        let totalApps = 0;
+        let totalDownloads = 0;
+        
+        // تهيئة الصفحة عند تحميلها
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+        
+        // تهيئة الصفحة
+        async function initPage() {
+            // تحميل إعدادات الموقع أولاً
+            await loadSiteSettings();
+            
+            // ثم تحميل التطبيقات
+            await loadApps();
+            
+            // تحميل الإحصائيات
+            await loadStats();
+            
+            // إعداد مستمعي الأحداث
+            setupEventListeners();
+            
+            // تحديث السنة
+            updateYear();
+        }
+        
+        // تحميل إعدادات الموقع
+        async function loadSiteSettings() {
+            try {
+                const response = await fetch('api_settings.php?action=get_site_info');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const settings = data.data;
+                    
+                    // تحديث محتوى الصفحة
+                    document.getElementById('siteName').textContent = settings.site_name;
+                    document.getElementById('pageDescription').textContent = `استعرض كل تطبيقات ${settings.site_name} المتاحة للتحميل المجاني. يمكنك البحث والتصفية حسب النوع`;
+                    document.getElementById('footerSiteName').textContent = `عن ${settings.site_name}`;
+                    document.getElementById('footerDescription').textContent = settings.site_description;
+                    document.getElementById('copyrightSiteName').textContent = settings.site_name;
+                    
+                    if (settings.contact_email) {
+                        document.getElementById('footerEmail').textContent = settings.contact_email;
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل إعدادات الموقع:', error);
+            }
+        }
+        
+        // تحميل التطبيقات
+        async function loadApps(page = 1) {
+            try {
+                // إظهار مؤشر التحميل
+                document.getElementById('loadingApps').style.display = 'block';
+                document.getElementById('appsGrid').style.display = 'none';
+                document.getElementById('noApps').style.display = 'none';
+                document.getElementById('pagination').style.display = 'none';
+                
+                // بناء رابط API
+                let url = `${API_URL}?action=get_all&page=${page}&limit=12`;
+                
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'featured') {
+                        url += '&featured=1';
+                    } else {
+                        url += `&category=${currentFilter}`;
+                    }
+                }
+                
+                if (searchQuery) {
+                    url += `&search=${encodeURIComponent(searchQuery)}`;
+                }
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    apps = data.data.apps;
+                    currentPage = data.data.page;
+                    totalPages = data.data.pages;
+                    totalApps = data.data.total;
+                    
+                    if (apps.length > 0) {
+                        renderApps();
+                        renderPagination();
+                        
+                        document.getElementById('appsGrid').style.display = 'grid';
+                        document.getElementById('pagination').style.display = 'flex';
+                        document.getElementById('noApps').style.display = 'none';
+                    } else {
+                        document.getElementById('appsGrid').style.display = 'none';
+                        document.getElementById('pagination').style.display = 'none';
+                        document.getElementById('noApps').style.display = 'block';
+                    }
+                } else {
+                    showNotification('حدث خطأ في تحميل التطبيقات', 'error');
+                    document.getElementById('noApps').style.display = 'block';
+                }
+                
+                document.getElementById('loadingApps').style.display = 'none';
+                
+            } catch (error) {
+                console.error('خطأ في تحميل التطبيقات:', error);
+                showNotification('حدث خطأ في الاتصال بالخادم', 'error');
+                document.getElementById('loadingApps').style.display = 'none';
+                document.getElementById('noApps').style.display = 'block';
+            }
+        }
+        
+        // تحميل الإحصائيات
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_URL}?action=get_stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const stats = data.data;
+                    
+                    // تحديث الإحصائيات
+                    document.getElementById('totalAppsCount').textContent = stats.total_apps || 0;
+                    document.getElementById('totalDownloadsCount').textContent = stats.total_downloads || 0;
+                    
+                    // تحميل الفئات
+                    const catsResponse = await fetch(`${API_URL}?action=get_categories`);
+                    const catsData = await catsResponse.json();
+                    
+                    if (catsData.success) {
+                        categories = catsData.data;
+                        document.getElementById('categoriesCount').textContent = categories.length;
+                    }
+                    
+                    document.getElementById('activeAppsCount').textContent = stats.total_apps || 0;
+                    
+                    // إظهار قسم الإحصائيات
+                    document.getElementById('appsStats').style.display = 'flex';
+                    
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+            }
+        }
+        
+        // عرض التطبيقات
+        function renderApps() {
+            const appsGrid = document.getElementById('appsGrid');
+            appsGrid.innerHTML = '';
+            
+            apps.forEach(app => {
+                const appCard = createAppCard(app);
+                appsGrid.appendChild(appCard);
+            });
+        }
+        
+        // إنشاء بطاقة تطبيق
+        function createAppCard(app) {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            card.setAttribute('data-id', app.id);
+            card.setAttribute('data-category', app.category);
+            
+            // تحويل اسم الفئة إلى نص عربي
+            let categoryText = '';
+            switch(app.category) {
+                case 'productivity': categoryText = 'الإنتاجية'; break;
+                case 'design': categoryText = 'التصميم'; break;
+                case 'multimedia': categoryText = 'الوسائط'; break;
+                case 'utility': categoryText = 'الأدوات'; break;
+                case 'games': categoryText = 'الألعاب'; break;
+                default: categoryText = app.category;
+            }
+            
+            // تقليل النص إذا كان طويلاً
+            let shortDescription = app.description;
+            if (shortDescription.length > 100) {
+                shortDescription = shortDescription.substring(0, 100) + '...';
+            }
+            
+            // إنشاء النجوم للتقييم
+            const stars = getStarRating(app.rating || 4.5);
+            
+            // إضافة علامة مميز إذا كان التطبيق مميزاً
+            const featuredBadge = app.is_featured ? '<span style="color: #f39c12; margin-right: 5px;"><i class="fas fa-star"></i></span>' : '';
+            
+            card.innerHTML = `
+                <div class="app-image">
+                    <img src="${app.image_url || 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}" alt="${app.name}" loading="lazy">
+                </div>
+                <div class="app-info">
+                    <span class="app-category">${featuredBadge}${categoryText}</span>
+                    <h3 class="app-title">${app.name}</h3>
+                    <p class="app-description">${shortDescription}</p>
+                    <div class="app-meta">
+                        <div>
+                            <span class="app-version">الإصدار ${app.version}</span>
+                            <div style="margin-top: 5px; color: #f39c12;">
+                                ${stars}
+                            </div>
+                        </div>
+                        <button class="btn btn-primary view-details-btn" data-id="${app.id}">
+                            <i class="fas fa-info-circle"></i> التفاصيل
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // إنشاء التنقل بين الصفحات
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // زر الصفحة السابقة
+            if (currentPage > 1) {
+                const prevBtn = document.createElement('li');
+                prevBtn.className = 'page-item';
+                prevBtn.innerHTML = `
+                    <a href="#" class="page-link" id="prevPage">
+                        <i class="fas fa-chevron-right"></i> السابق
+                    </a>
+                `;
+                prevBtn.querySelector('a').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadApps(currentPage - 1);
+                    window.scrollTo({ top: 600, behavior: 'smooth' });
+                });
+                pagination.appendChild(prevBtn);
+            }
+            
+            // أرقام الصفحات
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    const pageItem = document.createElement('li');
+                    pageItem.className = 'page-item';
+                    pageItem.innerHTML = `
+                        <a href="#" class="page-link ${i === currentPage ? 'active' : ''}">
+                            ${i}
+                        </a>
+                    `;
+                    pageItem.querySelector('a').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (i !== currentPage) {
+                            loadApps(i);
+                            window.scrollTo({ top: 600, behavior: 'smooth' });
+                        }
+                    });
+                    pagination.appendChild(pageItem);
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    const ellipsis = document.createElement('li');
+                    ellipsis.className = 'page-item disabled';
+                    ellipsis.innerHTML = '<span class="page-link">...</span>';
+                    pagination.appendChild(ellipsis);
+                }
+            }
+            
+            // زر الصفحة التالية
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement('li');
+                nextBtn.className = 'page-item';
+                nextBtn.innerHTML = `
+                    <a href="#" class="page-link" id="nextPage">
+                        التالي <i class="fas fa-chevron-left"></i>
+                    </a>
+                `;
+                nextBtn.querySelector('a').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadApps(currentPage + 1);
+                    window.scrollTo({ top: 600, behavior: 'smooth' });
+                });
+                pagination.appendChild(nextBtn);
+            }
+        }
+        
+        // عرض النجوم للتقييم
+        function getStarRating(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars + ` <small>(${rating.toFixed(1)})</small>`;
+        }
+        
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // زر القائمة المتنقلة
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                });
+            }
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                    }
+                });
+            });
+            
+            // أزرار التصفية
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // إزالة النشاط من جميع الأزرار
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // إضافة النشاط للزر المضغوط
+                    this.classList.add('active');
+                    // تحديث التصفية
+                    currentFilter = this.getAttribute('data-filter');
+                    currentPage = 1;
+                    loadApps(currentPage);
+                });
+            });
+            
+            // البحث
+            const searchBox = document.getElementById('searchBox');
+            let searchTimeout;
+            
+            if (searchBox) {
+                searchBox.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        searchQuery = this.value.trim();
+                        currentPage = 1;
+                        loadApps(currentPage);
+                    }, 500);
+                });
+                
+                // بحث عند الضغط على Enter
+                searchBox.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchQuery = this.value.trim();
+                        currentPage = 1;
+                        loadApps(currentPage);
+                    }
+                });
+            }
+            
+            // النقر على أزرار التفاصيل (يتم التعامل معها عبر event delegation)
+        }
+        
+        // التعامل مع النقر على أزرار التفاصيل (Event Delegation)
+        document.addEventListener('click', function(event) {
+            // زر التفاصيل
+            if (event.target.closest('.view-details-btn')) {
+                const button = event.target.closest('.view-details-btn');
+                const appId = parseInt(button.getAttribute('data-id'));
+                showAppDetails(appId);
+            }
+            
+            // إغلاق نافذة التفاصيل
+            if (event.target.id === 'closeDetailModal' || event.target.closest('#closeDetailModal')) {
+                closeAppDetails();
+            }
+        });
+        
+        // عرض تفاصيل التطبيق
+        async function showAppDetails(appId) {
+            try {
+                const response = await fetch(`${API_URL}?action=get_by_id&id=${appId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const app = data.data;
+                    renderAppDetails(app);
+                } else {
+                    showNotification('حدث خطأ في تحميل تفاصيل التطبيق', 'error');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل تفاصيل التطبيق:', error);
+                showNotification('حدث خطأ في الاتصال بالخادم', 'error');
+            }
+        }
+        
+        // عرض تفاصيل التطبيق في النافذة
+        function renderAppDetails(app) {
+            const modalContent = document.getElementById('appDetailContent');
+            
+            // تحويل اسم الفئة إلى نص عربي
+            let categoryText = '';
+            switch(app.category) {
+                case 'productivity': categoryText = 'الإنتاجية'; break;
+                case 'design': categoryText = 'التصميم'; break;
+                case 'multimedia': categoryText = 'الوسائط'; break;
+                case 'utility': categoryText = 'الأدوات'; break;
+                case 'games': categoryText = 'الألعاب'; break;
+                default: categoryText = app.category;
+            }
+            
+            // تحويل نوع الرخصة إلى نص عربي
+            let licenseText = '';
+            switch(app.license_type) {
+                case 'free': licenseText = 'مجاني'; break;
+                case 'paid': licenseText = 'مدفوع'; break;
+                case 'trial': licenseText = 'نسخة تجريبية'; break;
+                case 'opensource': licenseText = 'مفتوح المصدر'; break;
+                default: licenseText = app.license_type || 'مجاني';
+            }
+            
+            // تحويل البنية إلى نص عربي
+            let architectureText = '';
+            switch(app.architecture) {
+                case 'x64': architectureText = '64-bit'; break;
+                case 'x86': architectureText = '32-bit'; break;
+                case 'both': architectureText = 'كلا البنيتين'; break;
+                default: architectureText = app.architecture || '64-bit';
+            }
+            
+            modalContent.innerHTML = `
+                <div class="app-detail-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <div class="app-detail-image">
+                        <img src="${app.image_url || 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}" alt="${app.name}" style="width: 100%; border-radius: var(--radius);">
+                    </div>
+                    <div class="app-detail-info">
+                        <h1 style="font-size: 2.2rem; margin-bottom: 15px; color: var(--primary-color);">${app.name}</h1>
+                        <div style="display: flex; gap: 20px; margin-bottom: 25px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 8px; color: #666;">
+                                <i class="fas fa-tag" style="color: var(--secondary-color);"></i>
+                                <span>${categoryText}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; color: #666;">
+                                <i class="fas fa-code-branch" style="color: var(--secondary-color);"></i>
+                                <span>الإصدار ${app.version}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; color: #666;">
+                                <i class="fas fa-hdd" style="color: var(--secondary-color);"></i>
+                                <span>${app.size_mb} ميجابايت</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; color: #666;">
+                                <i class="fas fa-download" style="color: var(--secondary-color);"></i>
+                                <span>${app.downloads || 0} تحميل</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 20px; color: #f39c12; font-size: 1.2rem;">
+                            ${getStarRating(app.rating || 4.5)}
+                            ${app.is_featured ? '<span style="margin-right: 10px; color: #f39c12;"><i class="fas fa-star"></i> مميز</span>' : ''}
+                        </div>
+                        <div style="margin-bottom: 30px; line-height: 1.8;">
+                            <h3 style="margin-bottom: 10px; color: var(--primary-color);">عن التطبيق</h3>
+                            <p>${app.description}</p>
+                        </div>
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: var(--radius); margin-bottom: 30px;">
+                            <h3 style="margin-bottom: 10px; color: var(--primary-color);">معلومات التطبيق</h3>
+                            <p><i class="fas fa-user-tie" style="color: var(--secondary-color); margin-left: 5px;"></i> المطور: ${app.developer || 'غير معروف'}</p>
+                            <p><i class="fas fa-check-circle" style="color: var(--success-color); margin-left: 5px;"></i> المتطلبات: ${app.os_requirements || 'Windows 7 أو أحدث'}</p>
+                            <p><i class="fas fa-microchip" style="color: var(--secondary-color); margin-left: 5px;"></i> البنية: ${architectureText}</p>
+                            <p><i class="fas fa-balance-scale" style="color: var(--secondary-color); margin-left: 5px;"></i> نوع الرخصة: ${licenseText}</p>
+                            ${app.website_url ? `<p><i class="fas fa-globe" style="color: var(--secondary-color); margin-left: 5px;"></i> الموقع: <a href="${app.website_url}" target="_blank">${app.website_url}</a></p>` : ''}
+                            ${app.whats_new ? `<p style="margin-top: 10px;"><i class="fas fa-bullhorn" style="color: var(--accent-color); margin-left: 5px;"></i> ما الجديد: ${app.whats_new}</p>` : ''}
+                            <p style="margin-top: 10px;"><i class="fas fa-calendar-alt" style="color: var(--secondary-color); margin-left: 5px;"></i> آخر تحديث: ${new Date(app.updated_at).toLocaleDateString('ar-SA')}</p>
+                        </div>
+                        <div style="background-color: white; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow);">
+                            <h3 style="margin-bottom: 20px; color: var(--primary-color);">تحميل التطبيق</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                                <div style="background-color: #f8f9fa; padding: 10px 15px; border-radius: var(--radius); font-weight: 600;">
+                                    <i class="fas fa-file-archive"></i>
+                                    حجم الملف: ${app.size_mb} ميجابايت
+                                </div>
+                                <div style="background-color: #f8f9fa; padding: 10px 15px; border-radius: var(--radius); font-weight: 600;">
+                                    <i class="fas fa-download"></i>
+                                    ${app.downloads || 0} تحميل
+                                </div>
+                            </div>
+                            <button class="btn btn-success" id="downloadAppBtn" style="padding: 15px 30px; font-size: 1.1rem; width: 100%;" data-id="${app.id}">
+                                <i class="fas fa-download"></i> تحميل التطبيق الآن (مجاني)
+                            </button>
+                            <div class="download-progress" id="downloadProgress">
+                                <div class="download-progress-bar" id="downloadProgressBar"></div>
+                            </div>
+                            <p style="margin-top: 15px; font-size: 0.9rem; color: #666; text-align: center;">
+                                <i class="fas fa-shield-alt" style="color: var(--success-color);"></i>
+                                ملف آمن وخالي من الفيروسات
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // إظهار النافذة
+            const modal = document.getElementById('appDetailModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // إضافة حدث النقر على زر التحميل
+            const downloadBtn = document.getElementById('downloadAppBtn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    downloadApp(app.id, app.name);
+                });
+            }
+        }
+        
+        // إغلاق تفاصيل التطبيق
+        function closeAppDetails() {
+            const modal = document.getElementById('appDetailModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // تحميل التطبيق
+        async function downloadApp(appId, appName) {
+            try {
+                const downloadBtn = document.getElementById('downloadAppBtn');
+                const progressBar = document.getElementById('downloadProgressBar');
+                const progressContainer = document.getElementById('downloadProgress');
+                
+                // تعطيل الزر وإظهار التقدم
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+                progressContainer.style.display = 'block';
+                progressBar.style.width = '0%';
+                
+                // محاكاة شريط التقدم
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 10;
+                    progressBar.style.width = progress + '%';
+                    
+                    if (progress >= 90) {
+                        clearInterval(progressInterval);
+                    }
+                }, 200);
+                
+                // طلب رابط التحميل من API
+                const response = await fetch(`${API_URL}?action=download&id=${appId}`);
+                const data = await response.json();
+                
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                
+                if (data.success) {
+                    // تحميل الملف في نافذة جديدة
+                    setTimeout(() => {
+                        window.open(data.data.download_url, '_blank');
+                        
+                        // تحديث الإحصائيات
+                        loadStats();
+                        
+                        // إعادة تعيين الزر وإخفاء التقدم
+                        setTimeout(() => {
+                            downloadBtn.disabled = false;
+                            downloadBtn.innerHTML = '<i class="fas fa-download"></i> تم التحميل - إعادة التحميل';
+                            progressContainer.style.display = 'none';
+                            showNotification(`تم تحميل "${appName}" بنجاح!`, 'success');
+                        }, 1000);
+                    }, 500);
+                } else {
+                    showNotification('حدث خطأ في تحميل التطبيق: ' + data.message, 'error');
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> حاول مرة أخرى';
+                    progressContainer.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('خطأ في تحميل التطبيق:', error);
+                showNotification('حدث خطأ في الاتصال بالخادم', 'error');
+            }
+        }
+        
+        // تحديث سنة حقوق النشر
+        function updateYear() {
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        }
+        
+        // عرض إشعار
+        function showNotification(message, type = 'info') {
+            // إنشاء عنصر الإشعار
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'error'}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button class="close-alert">&times;</button>
+            `;
+            
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '9999';
+            notification.style.maxWidth = '400px';
+            notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            
+            // إضافة إلى الصفحة
+            document.body.appendChild(notification);
+            
+            // إغلاق الإشعار عند النقر على الزر
+            notification.querySelector('.close-alert').addEventListener('click', function() {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            });
+            
+            // إغلاق تلقائي بعد 5 ثوان
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+        
+        // التنقل السلس للروابط
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

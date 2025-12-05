@@ -1,0 +1,2763 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - متجر برامجي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2977/2977985.png">
+    <style>
+        /* النظام الأساسي */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #17a2b8;
+            --radius: 10px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .d-none {
+            display: none !important;
+        }
+        
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* رأس الموقع */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background: rgba(52, 152, 219, 0.2);
+            color: var(--secondary-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--accent-color), #c0392b);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #27ae60);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #d35400);
+            color: white;
+        }
+        
+        /* لوحة التحكم */
+        .admin-panel {
+            padding: 40px 0;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .admin-header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .admin-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 1200px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* الشريط الجانبي */
+        .admin-sidebar {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+        
+        .admin-menu {
+            list-style: none;
+        }
+        
+        .admin-menu li {
+            margin-bottom: 8px;
+        }
+        
+        .admin-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            transition: all 0.3s;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .admin-menu a:hover, .admin-menu a.active {
+            background: linear-gradient(90deg, rgba(52, 152, 219, 0.1), transparent);
+            color: var(--secondary-color);
+        }
+        
+        .admin-menu i {
+            width: 24px;
+            margin-left: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* المحتوى الرئيسي */
+        .admin-content {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            min-height: 500px;
+        }
+        
+        .admin-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .admin-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            font-size: 1.8rem;
+        }
+        
+        /* الإحصائيات */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, var(--success-color), #27ae60);
+        }
+        
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, var(--accent-color), #c0392b);
+        }
+        
+        .stat-card:nth-child(4) {
+            background: linear-gradient(135deg, var(--warning-color), #d35400);
+        }
+        
+        .stat-card:nth-child(5) {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+        
+        .stat-card:nth-child(6) {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+        
+        .stat-card h3 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .stat-card i {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            opacity: 0.2;
+            font-size: 2rem;
+        }
+        
+        /* الجداول */
+        .data-table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: var(--radius);
+            border: 1px solid #eee;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 18px 20px;
+            text-align: right;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: var(--primary-color);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            font-size: 0.95rem;
+        }
+        
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .edit-btn {
+            background: #e3f2fd;
+            color: var(--secondary-color);
+        }
+        
+        .edit-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #ffebee;
+            color: var(--accent-color);
+        }
+        
+        .delete-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        /* النماذج */
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            background: white;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        select.form-control {
+            cursor: pointer;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        /* التنبيهات */
+        .alert {
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 1px solid #b1dfbb;
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 1px solid #f1b0b7;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            color: #0c5460;
+            border: 1px solid #abdde5;
+        }
+        
+        .close-alert {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: inherit;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-alert:hover {
+            background: rgba(0,0,0,0.1);
+        }
+        
+        /* التذييل */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .admin-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), #c0392b);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .admin-sidebar {
+                position: static;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* زر تسجيل الخروج العائم */
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), #c0392b);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-action {
+                display: flex;
+            }
+        }
+        
+        /* أزرار التحرير */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* حالات خاصة */
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .no-data i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        .no-data h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .bg-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .windows-badge {
+            background: #0078d4;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .file-upload-container {
+            border: 2px dashed #ddd;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        
+        .file-upload-container:hover {
+            border-color: var(--secondary-color);
+            background: #f5f9ff;
+        }
+        
+        .file-upload-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .file-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: var(--radius);
+            border: 2px solid #eee;
+            margin-top: 10px;
+        }
+        
+        .message-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-new {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-read {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-replied {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-archived {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab:hover {
+            color: var(--secondary-color);
+        }
+        
+        .tab.active {
+            color: var(--secondary-color);
+            border-bottom-color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الموقع -->
+    <header>
+        <div class="container header-container">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fab fa-windows"></i>
+                <span>متجر برامجي</span>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html" target="_blank"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="apps.html" target="_blank"><i class="fas fa-desktop"></i> البرامج</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <div style="color: white;">
+                        <i class="fas fa-user-shield"></i>
+                        <span>المشرف</span>
+                        <span class="admin-badge">نظام Windows</span>
+                    </div>
+                    <button class="btn btn-danger" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- لوحة التحكم -->
+    <section class="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <h1><i class="fas fa-tachometer-alt"></i> لوحة تحكم برامج Windows</h1>
+                <div class="admin-actions">
+                    <button class="btn btn-primary" id="addAppBtn">
+                        <i class="fas fa-plus-circle"></i> إضافة برنامج جديد
+                    </button>
+                    <button class="btn btn-success" id="refreshDataBtn">
+                        <i class="fas fa-sync-alt"></i> تحديث البيانات
+                    </button>
+                </div>
+            </div>
+            
+            <div class="admin-container">
+                <!-- الشريط الجانبي -->
+                <div class="admin-sidebar">
+                    <ul class="admin-menu">
+                        <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i>لوحة التحكم</a></li>
+                        <li><a href="#appsManagement"><i class="fas fa-desktop"></i>إدارة البرامج</a></li>
+                        <li><a href="#addNewApp"><i class="fas fa-plus-circle"></i>إضافة برنامج جديد</a></li>
+                        <li><a href="#downloads"><i class="fas fa-download"></i>عمليات التحميل</a></li>
+                        <li><a href="#messages"><i class="fas fa-envelope"></i>الرسائل الواردة</a></li>
+                        <li><a href="#settings"><i class="fas fa-cog"></i>الإعدادات</a></li>
+                        <li><a href="#changePassword"><i class="fas fa-key"></i>تغيير كلمة المرور</a></li>
+                    </ul>
+                </div>
+                
+                <!-- المحتوى الرئيسي -->
+                <div class="admin-content">
+                    <!-- قسم لوحة التحكم -->
+                    <div id="dashboard" class="admin-section active">
+                        <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h2>
+                        
+                        <div class="alert alert-success" id="welcomeAlert">
+                            <span id="welcomeMessage">مرحبًا بك في لوحة تحكم برامج Windows</span>
+                            <button class="close-alert">&times;</button>
+                        </div>
+                        
+                        <div class="stats-container" id="statsContainer">
+                            <!-- سيتم ملء الإحصائيات ديناميكيًا -->
+                        </div>
+                        
+                        <!-- التطبيقات الأكثر تحميلاً -->
+                        <div style="margin-top: 50px;">
+                            <h3><i class="fas fa-chart-line"></i> التطبيقات الأكثر تحميلاً</h3>
+                            <div class="data-table-container" style="margin-top: 20px;">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>اسم البرنامج</th>
+                                            <th>الفئة</th>
+                                            <th>عدد التحميلات</th>
+                                            <th>آخر تحميل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topAppsTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم إدارة البرامج -->
+                    <div id="appsManagement" class="admin-section">
+                        <h2><i class="fas fa-desktop"></i> إدارة برامج Windows</h2>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showAdminSection('addNewApp')">
+                                <i class="fas fa-plus"></i> إضافة برنامج جديد
+                            </button>
+                            <button class="btn btn-success" onclick="loadApps()">
+                                <i class="fas fa-sync-alt"></i> تحديث القائمة
+                            </button>
+                            <button class="btn btn-warning" onclick="exportApps()">
+                                <i class="fas fa-file-export"></i> تصدير البيانات
+                            </button>
+                        </div>
+                        
+                        <div id="appsManagementAlert"></div>
+                        
+                        <div class="data-table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>اسم البرنامج</th>
+                                        <th>الحالة</th>
+                                        <th>الفئة</th>
+                                        <th>الإصدار</th>
+                                        <th>الحجم</th>
+                                        <th>التحميلات</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminAppsTable">
+                                    <!-- سيتم ملء الجدول ديناميكيًا -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم إضافة برنامج جديد -->
+                    <div id="addNewApp" class="admin-section">
+                        <h2><i class="fas fa-plus-circle"></i> <span id="formTitle">إضافة برنامج جديد</span></h2>
+                        
+                        <div class="alert alert-info">
+                            <i class="fab fa-windows"></i>
+                            <span>أقصى حجم للملف: 500MB | الصيغ المدعومة: EXE, MSI, ZIP</span>
+                        </div>
+                        
+                        <div id="formAlert"></div>
+                        
+                        <form id="addAppForm" enctype="multipart/form-data">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appName"><i class="fas fa-heading"></i> اسم البرنامج *</label>
+                                    <input type="text" id="appName" class="form-control" placeholder="أدخل اسم البرنامج" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appCategory"><i class="fas fa-tags"></i> الفئة *</label>
+                                    <select id="appCategory" class="form-control" required>
+                                        <option value="">اختر الفئة</option>
+                                        <option value="productivity">الإنتاجية</option>
+                                        <option value="design">التصميم والمونتاج</option>
+                                        <option value="development">التطوير والبرمجة</option>
+                                        <option value="security">الأمان والحماية</option>
+                                        <option value="multimedia">الوسائط المتعددة</option>
+                                        <option value="games">الألعاب</option>
+                                        <option value="utilities">الأدوات المساعدة</option>
+                                        <option value="office">برامج المكتب</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="appDescription"><i class="fas fa-align-left"></i> وصف البرنامج *</label>
+                                <textarea id="appDescription" class="form-control" placeholder="أدخل وصفاً مفصلاً للبرنامج" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appVersion"><i class="fas fa-code-branch"></i> رقم الإصدار *</label>
+                                    <input type="text" id="appVersion" class="form-control" placeholder="مثال: 1.0.0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appSize"><i class="fas fa-weight-hanging"></i> حجم البرنامج (MB) *</label>
+                                    <input type="number" id="appSize" class="form-control" placeholder="مثال: 150" step="0.1" min="0.1" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="appDeveloper"><i class="fas fa-user-tie"></i> المطور</label>
+                                <input type="text" id="appDeveloper" class="form-control" placeholder="اسم المطور أو الشركة">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appSystem"><i class="fab fa-windows"></i> نظام التشغيل *</label>
+                                    <select id="appSystem" class="form-control" required>
+                                        <option value="windows">Windows</option>
+                                        <option value="windows_7">Windows 7</option>
+                                        <option value="windows_8">Windows 8</option>
+                                        <option value="windows_10">Windows 10</option>
+                                        <option value="windows_11">Windows 11</option>
+                                        <option value="windows_all">جميع إصدارات Windows</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appArchitecture"><i class="fas fa-microchip"></i> البنية</label>
+                                    <select id="appArchitecture" class="form-control">
+                                        <option value="x64">64-bit (x64)</option>
+                                        <option value="x86">32-bit (x86)</option>
+                                        <option value="both">كلا البنيتين</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-file-archive"></i> ملف البرنامج *</label>
+                                <div class="file-upload-container" onclick="document.getElementById('appFile').click()">
+                                    <i class="fas fa-cloud-upload-alt file-upload-icon"></i>
+                                    <p>انقر لاختيار ملف البرنامج (EXE, MSI, ZIP)</p>
+                                    <small>الحد الأقصى: 500MB</small>
+                                    <input type="file" id="appFile" class="d-none" accept=".exe,.msi,.zip,.rar,.7z" required>
+                                </div>
+                                <div id="fileInfo" class="file-info">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <i class="fas fa-file"></i>
+                                        <div>
+                                            <strong id="fileName"></strong>
+                                            <div id="fileSize" style="font-size: 0.9rem; color: #666;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appImage"><i class="fas fa-image"></i> صورة البرنامج</label>
+                                    <div class="file-upload-container" onclick="document.getElementById('appImage').click()">
+                                        <i class="fas fa-image file-upload-icon"></i>
+                                        <p>انقر لاختيار صورة (اختياري)</p>
+                                        <small>الصيغ المدعومة: JPG, PNG, GIF</small>
+                                        <input type="file" id="appImage" class="d-none" accept="image/*">
+                                    </div>
+                                    <div id="imagePreview" style="margin-top: 10px;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appRequirements"><i class="fas fa-cogs"></i> المتطلبات</label>
+                                    <textarea id="appRequirements" class="form-control" rows="3" placeholder="متطلبات التشغيل (ذاكرة RAM، مساحة تخزين، إلخ)">ذاكرة RAM: 4GB أو أكثر
+مساحة تخزين: حسب حجم البرنامج
+نظام التشغيل: Windows 7 أو أحدث</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appLicense"><i class="fas fa-balance-scale"></i> نوع الرخصة</label>
+                                    <select id="appLicense" class="form-control">
+                                        <option value="free">مجاني</option>
+                                        <option value="trial">نسخة تجريبية</option>
+                                        <option value="paid">مدفوع</option>
+                                        <option value="opensource">مفتوح المصدر</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appWebsite"><i class="fas fa-globe"></i> الموقع الرسمي</label>
+                                    <input type="url" id="appWebsite" class="form-control" placeholder="https://example.com">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="appWhatsNew"><i class="fas fa-bullhorn"></i> ما الجديد في هذا الإصدار</label>
+                                <textarea id="appWhatsNew" class="form-control" rows="3" placeholder="أضف ميزات الإصدار الجديد"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <input type="checkbox" id="isFeatured" class="form-control" style="width: auto;">
+                                        <label for="isFeatured" style="margin: 0; font-weight: 600;">تطبيق مميز</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <input type="checkbox" id="isActive" class="form-control" style="width: auto;" checked>
+                                        <label for="isActive" style="margin: 0; font-weight: 600;">نشط</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button type="submit" class="btn btn-success" id="saveAppBtn">
+                                    <i class="fas fa-save"></i> <span id="saveBtnText">حفظ البرنامج</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="cancelEditBtn" style="display: none;">
+                                    <i class="fas fa-times"></i> إلغاء التعديل
+                                </button>
+                                <button type="reset" class="btn btn-warning" onclick="resetAppForm()">
+                                    <i class="fas fa-redo"></i> إعادة تعيين
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- قسم التحميلات -->
+                    <div id="downloads" class="admin-section">
+                        <h2><i class="fas fa-download"></i> عمليات التحميل</h2>
+                        
+                        <div class="tabs">
+                            <button class="tab active" data-tab="today">اليوم</button>
+                            <button class="tab" data-tab="week">هذا الأسبوع</button>
+                            <button class="tab" data-tab="month">هذا الشهر</button>
+                            <button class="tab" data-tab="all">الكل</button>
+                        </div>
+                        
+                        <div id="downloadsAlert"></div>
+                        
+                        <div class="tab-content active" id="todayTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>البرنامج</th>
+                                            <th>IP المستخدم</th>
+                                            <th>نظام التشغيل</th>
+                                            <th>التاريخ</th>
+                                            <th>الوقت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="todayDownloadsTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="weekTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>البرنامج</th>
+                                            <th>IP المستخدم</th>
+                                            <th>نظام التشغيل</th>
+                                            <th>التاريخ</th>
+                                            <th>الوقت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weekDownloadsTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="monthTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>البرنامج</th>
+                                            <th>IP المستخدم</th>
+                                            <th>نظام التشغيل</th>
+                                            <th>التاريخ</th>
+                                            <th>الوقت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthDownloadsTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="allTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>البرنامج</th>
+                                            <th>IP المستخدم</th>
+                                            <th>نظام التشغيل</th>
+                                            <th>التاريخ</th>
+                                            <th>الوقت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="allDownloadsTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم الرسائل الواردة -->
+                    <div id="messages" class="admin-section">
+                        <h2><i class="fas fa-envelope"></i> الرسائل الواردة</h2>
+                        
+                        <div class="tabs">
+                            <button class="tab active" data-tab="newMessages">جديد (<span id="newCount">0</span>)</button>
+                            <button class="tab" data-tab="readMessages">مقروء</button>
+                            <button class="tab" data-tab="repliedMessages">تم الرد</button>
+                            <button class="tab" data-tab="allMessages">الكل</button>
+                        </div>
+                        
+                        <div id="messagesAlert"></div>
+                        
+                        <div class="tab-content active" id="newMessagesTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المرسل</th>
+                                            <th>البريد الإلكتروني</th>
+                                            <th>الموضوع</th>
+                                            <th>التاريخ</th>
+                                            <th>الحالة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="newMessagesTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="readMessagesTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المرسل</th>
+                                            <th>البريد الإلكتروني</th>
+                                            <th>الموضوع</th>
+                                            <th>التاريخ</th>
+                                            <th>الحالة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="readMessagesTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="repliedMessagesTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المرسل</th>
+                                            <th>البريد الإلكتروني</th>
+                                            <th>الموضوع</th>
+                                            <th>التاريخ</th>
+                                            <th>الرد في</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="repliedMessagesTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="allMessagesTab">
+                            <div class="data-table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المرسل</th>
+                                            <th>البريد الإلكتروني</th>
+                                            <th>الموضوع</th>
+                                            <th>التاريخ</th>
+                                            <th>الحالة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="allMessagesTable">
+                                        <!-- سيتم ملء الجدول ديناميكيًا -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم الإعدادات -->
+                    <div id="settings" class="admin-section">
+                        <h2><i class="fas fa-cog"></i> إعدادات الموقع</h2>
+                        
+                        <div class="tabs">
+                            <button class="tab active" data-tab="generalSettings">عام</button>
+                            <button class="tab" data-tab="emailSettings">البريد الإلكتروني</button>
+                            <button class="tab" data-tab="uploadSettings">التحميلات</button>
+                        </div>
+                        
+                        <div id="settingsAlert"></div>
+                        
+                        <!-- الإعدادات العامة -->
+                        <div class="tab-content active" id="generalSettingsTab">
+                            <form id="generalSettingsForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="siteName"><i class="fas fa-globe"></i> اسم الموقع *</label>
+                                        <input type="text" id="siteName" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adminEmail"><i class="fas fa-envelope"></i> بريد المشرف *</label>
+                                        <input type="email" id="adminEmail" class="form-control" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="siteDescription"><i class="fas fa-align-left"></i> وصف الموقع</label>
+                                    <textarea id="siteDescription" class="form-control" rows="3"></textarea>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="contactEmail"><i class="fas fa-address-book"></i> بريد الاتصال</label>
+                                        <input type="email" id="contactEmail" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="itemsPerPage"><i class="fas fa-list-ol"></i> عدد العناصر لكل صفحة</label>
+                                        <input type="number" id="itemsPerPage" class="form-control" min="5" max="50" value="12">
+                                    </div>
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> حفظ الإعدادات العامة
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- إعدادات البريد الإلكتروني -->
+                        <div class="tab-content" id="emailSettingsTab">
+                            <form id="emailSettingsForm">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>لإعداد Gmail، يجب تفعيل "التحقق بخطوتين" ثم إنشاء "كلمة مرور تطبيق"</span>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="smtpHost"><i class="fas fa-server"></i> SMTP Host *</label>
+                                        <input type="text" id="smtpHost" class="form-control" value="smtp.gmail.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtpPort"><i class="fas fa-plug"></i> SMTP Port *</label>
+                                        <input type="number" id="smtpPort" class="form-control" value="587" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="smtpUsername"><i class="fas fa-user"></i> SMTP Username *</label>
+                                        <input type="email" id="smtpUsername" class="form-control" placeholder="your-email@gmail.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtpPassword"><i class="fas fa-key"></i> SMTP Password</label>
+                                        <input type="password" id="smtpPassword" class="form-control" placeholder="اترك فارغاً للحفاظ على القيمة الحالية">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="smtpEncryption"><i class="fas fa-shield-alt"></i> التشفير</label>
+                                        <select id="smtpEncryption" class="form-control">
+                                            <option value="tls">TLS</option>
+                                            <option value="ssl">SSL</option>
+                                            <option value="">بدون</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> حفظ إعدادات البريد
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="testEmailSettings()">
+                                        <i class="fas fa-paper-plane"></i> اختبار الإرسال
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- إعدادات التحميلات -->
+                        <div class="tab-content" id="uploadSettingsTab">
+                            <form id="uploadSettingsForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="maxUploadSizeApp"><i class="fas fa-file-archive"></i> أقصى حجم للبرامج (MB)</label>
+                                        <input type="number" id="maxUploadSizeApp" class="form-control" value="500" min="1" max="1024">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxUploadSizeImage"><i class="fas fa-image"></i> أقصى حجم للصور (MB)</label>
+                                        <input type="number" id="maxUploadSizeImage" class="form-control" value="5" min="1" max="20">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="allowedAppExtensions"><i class="fas fa-file-code"></i> صيغ البرامج المسموحة</label>
+                                        <input type="text" id="allowedAppExtensions" class="form-control" value="exe,msi,zip,rar,7z">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="allowedImageExtensions"><i class="fas fa-file-image"></i> صيغ الصور المسموحة</label>
+                                        <input type="text" id="allowedImageExtensions" class="form-control" value="jpg,jpeg,png,gif,webp">
+                                    </div>
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> حفظ إعدادات التحميل
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم تغيير كلمة المرور -->
+                    <div id="changePassword" class="admin-section">
+                        <h2><i class="fas fa-key"></i> تغيير كلمة المرور</h2>
+                        
+                        <div id="passwordAlert"></div>
+                        
+                        <form id="changePasswordForm">
+                            <div class="form-group">
+                                <label for="currentPassword"><i class="fas fa-lock"></i> كلمة المرور الحالية *</label>
+                                <div class="input-with-icon password-container">
+                                    <i class="fas fa-key"></i>
+                                    <input type="password" id="currentPassword" class="form-control" placeholder="أدخل كلمة المرور الحالية" required>
+                                    <button type="button" class="toggle-password" data-target="currentPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword"><i class="fas fa-lock"></i> كلمة المرور الجديدة *</label>
+                                <div class="input-with-icon password-container">
+                                    <i class="fas fa-key"></i>
+                                    <input type="password" id="newPassword" class="form-control" placeholder="أدخل كلمة المرور الجديدة" required>
+                                    <button type="button" class="toggle-password" data-target="newPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                                </div>
+                                <small style="color: #666; display: block; margin-top: 5px;">
+                                    يجب أن تحتوي كلمة المرور على الأقل على 8 أحرف وتشمل أحرفاً كبيرة وصغيرة وأرقاماً
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword"><i class="fas fa-lock"></i> تأكيد كلمة المرور *</label>
+                                <div class="input-with-icon password-container">
+                                    <i class="fas fa-key"></i>
+                                    <input type="password" id="confirmPassword" class="form-control" placeholder="أعد إدخال كلمة المرور الجديدة" required>
+                                    <button type="button" class="toggle-password" data-target="confirmPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small id="passwordMatch" style="color: #e74c3c; display: none;">
+                                    <i class="fas fa-times-circle"></i> كلمتا المرور غير متطابقتين
+                                </small>
+                                <small id="passwordMatchOk" style="color: #2ecc71; display: none;">
+                                    <i class="fas fa-check-circle"></i> كلمتا المرور متطابقتان
+                                </small>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> تغيير كلمة المرور
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن المتجر</h3>
+                    <p id="footerSiteDescription">متجر برامج Windows الرسمي - تحميل برامج وتطبيقات ويندوز مجانية وآمنة</p>
+                </div>
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">admin@example.com</span></p>
+                    <p><i class="fab fa-windows"></i> نظام Windows فقط</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span> <span id="footerSiteName">متجر برامجي</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة عرض الرسالة -->
+    <div id="messageModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> <span id="messageModalTitle">عرض الرسالة</span></h3>
+                <button class="close-modal" onclick="closeMessageModal()">&times;</button>
+            </div>
+            
+            <div id="messageModalContent">
+                <!-- سيتم ملء محتوى الرسالة هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الرد على الرسالة -->
+    <div id="replyModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-reply"></i> الرد على الرسالة</h3>
+                <button class="close-modal" onclick="closeReplyModal()">&times;</button>
+            </div>
+            
+            <div id="replyAlert"></div>
+            
+            <form id="replyForm">
+                <input type="hidden" id="replyMessageId">
+                
+                <div class="form-group">
+                    <label for="replySubject">موضوع الرد *</label>
+                    <input type="text" id="replySubject" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="replyMessage">نص الرد *</label>
+                    <textarea id="replyMessage" class="form-control" rows="6" required placeholder="اكتب ردك هنا..."></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> إرسال الرد
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeReplyModal()">
+                        <i class="fas fa-times"></i> إلغاء
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // الحالة الحالية
+        let currentState = {
+            currentEditingAppId: null,
+            isEditMode: false,
+            currentTab: 'dashboard',
+            currentUser: null,
+            siteSettings: {}
+        };
+
+        // دالة لعرض رسالة تنبيه
+        function showAlert(message, type = 'info', containerId = null) {
+            const alertElement = containerId ? 
+                document.getElementById(containerId) : 
+                document.getElementById(currentState.currentTab + 'Alert') || document.getElementById('welcomeAlert');
+            
+            if (!alertElement) return;
+            
+            alertElement.innerHTML = '';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            
+            if (type === 'success') {
+                messageDiv.className = 'alert alert-success';
+            } else if (type === 'error') {
+                messageDiv.className = 'alert alert-error';
+            } else {
+                messageDiv.className = 'alert alert-info';
+            }
+            
+            // إضافة زر الإغلاق
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-alert';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function() {
+                messageDiv.style.display = 'none';
+            });
+            
+            messageDiv.appendChild(closeBtn);
+            alertElement.appendChild(messageDiv);
+            alertElement.style.display = 'block';
+            
+            // إخفاء التنبيه تلقائياً
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+
+        // دالة للتحقق من تسجيل الدخول
+        async function checkLogin() {
+            try {
+                const response = await fetch('api_auth.php?action=check_session');
+                const data = await response.json();
+                
+                if (!data.success || !data.data.is_logged_in) {
+                    window.location.href = 'login.html';
+                    return false;
+                }
+                
+                currentState.currentUser = data.data.user;
+                updateUserInfo();
+                return true;
+                
+            } catch (error) {
+                console.error('خطأ في التحقق من تسجيل الدخول:', error);
+                window.location.href = 'login.html';
+                return false;
+            }
+        }
+
+        // دالة لتحديث معلومات المستخدم
+        function updateUserInfo() {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (welcomeMessage && currentState.currentUser) {
+                welcomeMessage.textContent = `مرحباً ${currentState.currentUser.username} في لوحة تحكم برامج Windows`;
+            }
+        }
+
+        // دالة لإظهار قسم معين
+        function showAdminSection(sectionId) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // إزالة النشاط من القوائم
+            document.querySelectorAll('.admin-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // إظهار القسم المطلوب
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                currentState.currentTab = sectionId;
+            }
+            
+            // تفعيل القائمة المناسبة
+            const targetLink = document.querySelector(`.admin-menu a[href="#${sectionId}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+            
+            // تحميل بيانات القسم
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboardStats();
+                    loadTopApps();
+                    break;
+                case 'appsManagement':
+                    loadApps();
+                    break;
+                case 'downloads':
+                    loadDownloads('today');
+                    break;
+                case 'messages':
+                    loadMessages('new');
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+            }
+        }
+
+        // دالة لتحميل إحصائيات لوحة التحكم
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('api_apps.php?action=get_stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const stats = data.data;
+                    const statsContainer = document.getElementById('statsContainer');
+                    
+                    statsContainer.innerHTML = `
+                        <div class="stat-card">
+                            <h3>${stats.total_apps}</h3>
+                            <p>إجمالي البرامج</p>
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="stat-card">
+                            <h3>${stats.total_downloads.toLocaleString()}</h3>
+                            <p>إجمالي التحميلات</p>
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="stat-card">
+                            <h3>${stats.total_storage}</h3>
+                            <p>المساحة المستخدمة (MB)</p>
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <div class="stat-card">
+                            <h3>${stats.windows_apps}</h3>
+                            <p>برامج Windows</p>
+                            <i class="fab fa-windows"></i>
+                        </div>
+                        <div class="stat-card">
+                            <h3>${stats.new_messages}</h3>
+                            <p>رسائل جديدة</p>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-card">
+                            <h3>${stats.today_downloads}</h3>
+                            <p>تحميلات اليوم</p>
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الإحصائيات:', error);
+            }
+        }
+
+        // دالة لتحميل التطبيقات الأكثر تحميلاً
+        async function loadTopApps() {
+            try {
+                const response = await fetch('api_apps.php?action=get_stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const topApps = data.data.top_apps || [];
+                    const tableBody = document.getElementById('topAppsTable');
+                    
+                    if (topApps.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="no-data">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h3>لا توجد بيانات بعد</h3>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    let html = '';
+                    topApps.forEach((app, index) => {
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><strong>${app.name}</strong></td>
+                                <td>${getCategoryText(app.category)}</td>
+                                <td><span class="badge bg-primary">${app.downloads}</span></td>
+                                <td>${new Date().toLocaleDateString('ar-SA')}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableBody.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل التطبيقات الأكثر تحميلاً:', error);
+            }
+        }
+
+        // دالة لتحميل قائمة التطبيقات
+        async function loadApps() {
+            try {
+                const response = await fetch('api_apps.php?action=get_all');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const apps = data.data.apps || [];
+                    const tableBody = document.getElementById('adminAppsTable');
+                    
+                    if (apps.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="8" class="no-data">
+                                    <i class="fas fa-desktop"></i>
+                                    <h3>لا توجد برامج</h3>
+                                    <p>قم بإضافة أول برنامج باستخدام زر "إضافة برنامج جديد"</p>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    let html = '';
+                    apps.forEach((app, index) => {
+                        const statusBadge = app.is_active ? 
+                            '<span class="badge bg-primary">نشط</span>' : 
+                            '<span class="badge" style="background: #6c757d;">غير نشط</span>';
+                        
+                        const featuredBadge = app.is_featured ? 
+                            '<span class="badge" style="background: #f39c12; margin-right: 5px;">مميز</span>' : '';
+                        
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>
+                                    ${featuredBadge}
+                                    <strong>${app.name}</strong>
+                                </td>
+                                <td>${statusBadge}</td>
+                                <td>${getCategoryText(app.category)}</td>
+                                <td>${app.version}</td>
+                                <td>${app.size_mb} MB</td>
+                                <td><span class="badge bg-primary">${app.downloads || 0}</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn" onclick="editApp(${app.id})" title="تعديل">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete-btn" onclick="deleteApp(${app.id})" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableBody.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل التطبيقات:', error);
+                showAlert('حدث خطأ في تحميل التطبيقات', 'error', 'appsManagementAlert');
+            }
+        }
+
+        // دالة لتحويل رمز الفئة إلى نص
+        function getCategoryText(category) {
+            const categories = {
+                'productivity': 'الإنتاجية',
+                'design': 'التصميم والمونتاج',
+                'development': 'التطوير والبرمجة',
+                'security': 'الأمان والحماية',
+                'multimedia': 'الوسائط المتعددة',
+                'games': 'الألعاب',
+                'utilities': 'الأدوات المساعدة',
+                'office': 'برامج المكتب'
+            };
+            
+            return categories[category] || category;
+        }
+
+        // دالة لإضافة/تعديل تطبيق
+        async function saveApp(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const appId = currentState.currentEditingAppId;
+            
+            // إضافة البيانات الأساسية
+            formData.append('name', document.getElementById('appName').value);
+            formData.append('category', document.getElementById('appCategory').value);
+            formData.append('description', document.getElementById('appDescription').value);
+            formData.append('version', document.getElementById('appVersion').value);
+            formData.append('size_mb', document.getElementById('appSize').value);
+            formData.append('developer', document.getElementById('appDeveloper').value);
+            formData.append('os_requirements', document.getElementById('appSystem').value);
+            formData.append('license_type', document.getElementById('appLicense').value);
+            formData.append('website_url', document.getElementById('appWebsite').value);
+            formData.append('whats_new', document.getElementById('appWhatsNew').value);
+            formData.append('is_featured', document.getElementById('isFeatured').checked ? '1' : '0');
+            formData.append('is_active', document.getElementById('isActive').checked ? '1' : '0');
+            
+            // إضافة الملفات
+            const appFile = document.getElementById('appFile').files[0];
+            if (appFile) {
+                formData.append('app_file', appFile);
+            }
+            
+            const appImage = document.getElementById('appImage').files[0];
+            if (appImage) {
+                formData.append('app_image', appImage);
+            }
+            
+            // تحديد الإجراء (إضافة أو تعديل)
+            const action = currentState.isEditMode ? 'update' : 'add';
+            if (currentState.isEditMode) {
+                formData.append('id', appId);
+            }
+            
+            // إظهار حالة التحميل
+            const saveBtn = document.getElementById('saveAppBtn');
+            const saveText = document.getElementById('saveBtnText');
+            const originalText = saveText.textContent;
+            
+            saveBtn.disabled = true;
+            saveText.innerHTML = '<span class="loading"></span> جاري الحفظ...';
+            
+            try {
+                const response = await fetch(`api_apps.php?action=${action}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert(`✅ ${data.message}`, 'success', 'formAlert');
+                    
+                    // إعادة تعيين النموذج والعودة لقائمة التطبيقات
+                    resetAppForm();
+                    setTimeout(() => {
+                        showAdminSection('appsManagement');
+                        loadApps();
+                        loadDashboardStats();
+                    }, 1500);
+                } else {
+                    showAlert(`❌ ${data.message}`, 'error', 'formAlert');
+                    saveBtn.disabled = false;
+                    saveText.textContent = originalText;
+                }
+                
+            } catch (error) {
+                console.error('خطأ في حفظ التطبيق:', error);
+                showAlert('❌ حدث خطأ في الاتصال بالخادم', 'error', 'formAlert');
+                saveBtn.disabled = false;
+                saveText.textContent = originalText;
+            }
+        }
+
+        // دالة لتعديل تطبيق
+        async function editApp(appId) {
+            try {
+                const response = await fetch(`api_apps.php?action=get_by_id&id=${appId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const app = data.data;
+                    
+                    // تعبئة النموذج
+                    document.getElementById('formTitle').textContent = `تعديل البرنامج: ${app.name}`;
+                    document.getElementById('appName').value = app.name;
+                    document.getElementById('appCategory').value = app.category;
+                    document.getElementById('appDescription').value = app.description;
+                    document.getElementById('appVersion').value = app.version;
+                    document.getElementById('appSize').value = app.size_mb;
+                    document.getElementById('appDeveloper').value = app.developer || '';
+                    document.getElementById('appSystem').value = app.os_requirements || 'windows';
+                    document.getElementById('appLicense').value = app.license_type || 'free';
+                    document.getElementById('appWebsite').value = app.website_url || '';
+                    document.getElementById('appWhatsNew').value = app.whats_new || '';
+                    document.getElementById('isFeatured').checked = app.is_featured == 1;
+                    document.getElementById('isActive').checked = app.is_active == 1;
+                    
+                    // إظهار معلومات الملف إذا كان موجوداً
+                    if (app.file_name) {
+                        document.getElementById('fileName').textContent = app.file_name;
+                        document.getElementById('fileSize').textContent = `الحجم: ${app.size_mb} MB`;
+                        document.getElementById('fileInfo').style.display = 'block';
+                    }
+                    
+                    // إظهار الصورة إذا كانت موجودة
+                    if (app.image_url && !app.image_url.includes('unsplash.com')) {
+                        document.getElementById('imagePreview').innerHTML = `
+                            <img src="${app.image_url}" class="preview-image" alt="صورة البرنامج">
+                        `;
+                    }
+                    
+                    document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+                    document.getElementById('saveBtnText').textContent = 'تحديث البرنامج';
+                    
+                    currentState.currentEditingAppId = appId;
+                    currentState.isEditMode = true;
+                    
+                    showAdminSection('addNewApp');
+                    
+                } else {
+                    showAlert('❌ ' + data.message, 'error', 'appsManagementAlert');
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل بيانات التطبيق:', error);
+                showAlert('❌ حدث خطأ في تحميل بيانات التطبيق', 'error', 'appsManagementAlert');
+            }
+        }
+
+        // دالة لحذف تطبيق
+        async function deleteApp(appId) {
+            if (!confirm('هل أنت متأكد من حذف هذا البرنامج؟ لا يمكن التراجع عن هذه العملية.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`api_apps.php?action=delete&id=${appId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert(`✅ ${data.message}`, 'success', 'appsManagementAlert');
+                    loadApps();
+                    loadDashboardStats();
+                } else {
+                    showAlert(`❌ ${data.message}`, 'error', 'appsManagementAlert');
+                }
+            } catch (error) {
+                console.error('خطأ في حذف التطبيق:', error);
+                showAlert('❌ حدث خطأ في حذف التطبيق', 'error', 'appsManagementAlert');
+            }
+        }
+
+        // دالة لإعادة تعيين نموذج التطبيق
+        function resetAppForm() {
+            document.getElementById('addAppForm').reset();
+            document.getElementById('formTitle').textContent = 'إضافة برنامج جديد';
+            document.getElementById('saveBtnText').textContent = 'حفظ البرنامج';
+            document.getElementById('cancelEditBtn').style.display = 'none';
+            
+            document.getElementById('fileInfo').style.display = 'none';
+            document.getElementById('imagePreview').innerHTML = '';
+            
+            currentState.currentEditingAppId = null;
+            currentState.isEditMode = false;
+        }
+
+        // دالة لتحميل التحميلات
+        async function loadDownloads(period) {
+            try {
+                const response = await fetch(`api_apps.php?action=get_downloads&period=${period}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const downloads = data.data.downloads || [];
+                    const tableId = `${period}DownloadsTable`;
+                    const tableBody = document.getElementById(tableId);
+                    
+                    if (downloads.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="no-data">
+                                    <i class="fas fa-download"></i>
+                                    <h3>لا توجد تحميلات</h3>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    let html = '';
+                    downloads.forEach(download => {
+                        html += `
+                            <tr>
+                                <td><strong>${download.app_name}</strong></td>
+                                <td><code>${download.user_ip}</code></td>
+                                <td>${getBrowserInfo(download.user_agent)}</td>
+                                <td>${new Date(download.download_date).toLocaleDateString('ar-SA')}</td>
+                                <td>${new Date(download.download_date).toLocaleTimeString('ar-SA')}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableBody.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل التحميلات:', error);
+                showAlert('حدث خطأ في تحميل التحميلات', 'error', 'downloadsAlert');
+            }
+        }
+
+        // دالة للحصول على معلومات المتصفح
+        function getBrowserInfo(userAgent) {
+            if (!userAgent) return 'غير معروف';
+            
+            if (userAgent.includes('Firefox')) return 'Firefox';
+            if (userAgent.includes('Chrome')) return 'Chrome';
+            if (userAgent.includes('Safari')) return 'Safari';
+            if (userAgent.includes('Edge')) return 'Edge';
+            if (userAgent.includes('MSIE') || userAgent.includes('Trident')) return 'Internet Explorer';
+            
+            return 'متصفح آخر';
+        }
+
+        // دالة لتحميل الرسائل
+        async function loadMessages(status) {
+            try {
+                const response = await fetch(`api_messages.php?action=get_all&status=${status}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const messages = data.data.messages || [];
+                    const tableId = `${status}MessagesTable`;
+                    const tableBody = document.getElementById(tableId);
+                    const newCount = document.getElementById('newCount');
+                    
+                    // تحديث عدد الرسائل الجديدة
+                    if (newCount && data.data.stats) {
+                        const newStats = data.data.stats.find(stat => stat.status === 'new');
+                        newCount.textContent = newStats ? newStats.count : 0;
+                    }
+                    
+                    if (messages.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="no-data">
+                                    <i class="fas fa-envelope"></i>
+                                    <h3>لا توجد رسائل</h3>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
+                    
+                    let html = '';
+                    messages.forEach(message => {
+                        const statusClass = `status-${message.status}`;
+                        const statusText = {
+                            'new': 'جديد',
+                            'read': 'مقروء',
+                            'replied': 'تم الرد',
+                            'archived': 'مؤرشف'
+                        }[message.status] || message.status;
+                        
+                        html += `
+                            <tr>
+                                <td><strong>${message.name}</strong></td>
+                                <td>${message.email}</td>
+                                <td>${message.subject}</td>
+                                <td>${message.created_at_formatted}</td>
+                                <td><span class="message-status ${statusClass}">${statusText}</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn" onclick="viewMessage(${message.id})" title="عرض">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        ${message.status === 'new' ? `
+                                        <button class="action-btn" style="background: #d1ecf1; color: #0c5460;" onclick="markAsRead(${message.id})" title="تحديد كمقروء">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        ` : ''}
+                                        ${message.status !== 'replied' ? `
+                                        <button class="action-btn" style="background: #d4edda; color: #155724;" onclick="replyToMessage(${message.id})" title="رد">
+                                            <i class="fas fa-reply"></i>
+                                        </button>
+                                        ` : ''}
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableBody.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الرسائل:', error);
+                showAlert('حدث خطأ في تحميل الرسائل', 'error', 'messagesAlert');
+            }
+        }
+
+        // دالة لعرض رسالة
+        async function viewMessage(messageId) {
+            try {
+                const response = await fetch(`api_messages.php?action=get_by_id&id=${messageId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const message = data.data;
+                    
+                    document.getElementById('messageModalTitle').textContent = message.subject;
+                    
+                    const modalContent = document.getElementById('messageModalContent');
+                    modalContent.innerHTML = `
+                        <div style="padding: 20px;">
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: var(--radius); margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                    <div>
+                                        <strong><i class="fas fa-user"></i> المرسل:</strong>
+                                        <span style="margin-right: 10px;">${message.name}</span>
+                                    </div>
+                                    <div>
+                                        <strong><i class="fas fa-calendar"></i> التاريخ:</strong>
+                                        <span style="margin-right: 10px;">${message.created_at_formatted}</span>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <strong><i class="fas fa-envelope"></i> البريد الإلكتروني:</strong>
+                                    <a href="mailto:${message.email}" style="margin-right: 10px;">${message.email}</a>
+                                </div>
+                                <div>
+                                    <strong><i class="fas fa-tag"></i> الموضوع:</strong>
+                                    <span style="margin-right: 10px;">${message.subject}</span>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-align-left"></i> نص الرسالة:</h4>
+                                <div style="background: white; padding: 20px; border-radius: var(--radius); border: 1px solid #eee; line-height: 1.8;">
+                                    ${message.message.replace(/\n/g, '<br>')}
+                                </div>
+                            </div>
+                            
+                            ${message.admin_notes ? `
+                            <div>
+                                <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-sticky-note"></i> ملاحظات المشرف:</h4>
+                                <div style="background: #fff3cd; padding: 15px; border-radius: var(--radius);">
+                                    ${message.admin_notes}
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <div style="margin-top: 30px; text-align: left;">
+                                <button class="btn btn-primary" onclick="replyToMessage(${message.id})">
+                                    <i class="fas fa-reply"></i> الرد على الرسالة
+                                </button>
+                                <button class="btn btn-secondary" onclick="closeMessageModal()" style="margin-right: 10px;">
+                                    <i class="fas fa-times"></i> إغلاق
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('messageModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('خطأ في عرض الرسالة:', error);
+                showAlert('حدث خطأ في عرض الرسالة', 'error', 'messagesAlert');
+            }
+        }
+
+        // دالة لتحديد رسالة كمقروءة
+        async function markAsRead(messageId) {
+            try {
+                const formData = new FormData();
+                formData.append('id', messageId);
+                formData.append('status', 'read');
+                
+                const response = await fetch('api_messages.php?action=update_status', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('✅ تم تحديث حالة الرسالة', 'success', 'messagesAlert');
+                    loadMessages('new');
+                } else {
+                    showAlert('❌ ' + data.message, 'error', 'messagesAlert');
+                }
+            } catch (error) {
+                console.error('خطأ في تحديث حالة الرسالة:', error);
+                showAlert('حدث خطأ في تحديث حالة الرسالة', 'error', 'messagesAlert');
+            }
+        }
+
+        // دالة للرد على رسالة
+        async function replyToMessage(messageId) {
+            try {
+                const response = await fetch(`api_messages.php?action=get_by_id&id=${messageId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const message = data.data;
+                    
+                    document.getElementById('replyMessageId').value = messageId;
+                    document.getElementById('replySubject').value = `رد على: ${message.subject}`;
+                    document.getElementById('replyMessage').value = '';
+                    
+                    document.getElementById('replyModal').style.display = 'flex';
+                    closeMessageModal();
+                }
+            } catch (error) {
+                console.error('خطأ في تحضير الرد:', error);
+                showAlert('حدث خطأ في تحضير الرد', 'error', 'messagesAlert');
+            }
+        }
+
+        // دالة لإرسال رد
+        async function sendReply(event) {
+            event.preventDefault();
+            
+            const messageId = document.getElementById('replyMessageId').value;
+            const subject = document.getElementById('replySubject').value;
+            const message = document.getElementById('replyMessage').value;
+            
+            if (!messageId || !subject || !message) {
+                showAlert('يرجى ملء جميع الحقول', 'error', 'replyAlert');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('message_id', messageId);
+            formData.append('reply_subject', subject);
+            formData.append('reply_message', message);
+            
+            const replyBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = replyBtn.innerHTML;
+            
+            replyBtn.disabled = true;
+            replyBtn.innerHTML = '<span class="loading"></span> جاري الإرسال...';
+            
+            try {
+                const response = await fetch('api_messages.php?action=send_reply', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('✅ تم إرسال الرد بنجاح', 'success', 'replyAlert');
+                    
+                    setTimeout(() => {
+                        closeReplyModal();
+                        loadMessages('new');
+                    }, 1500);
+                } else {
+                    showAlert('❌ ' + data.message, 'error', 'replyAlert');
+                    replyBtn.disabled = false;
+                    replyBtn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error('خطأ في إرسال الرد:', error);
+                showAlert('حدث خطأ في إرسال الرد', 'error', 'replyAlert');
+                replyBtn.disabled = false;
+                replyBtn.innerHTML = originalText;
+            }
+        }
+
+        // دالة لإغلاق نافذة الرسالة
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+
+        // دالة لإغلاق نافذة الرد
+        function closeReplyModal() {
+            document.getElementById('replyModal').style.display = 'none';
+            document.getElementById('replyForm').reset();
+            document.getElementById('replyAlert').innerHTML = '';
+        }
+
+        // دالة لتحميل الإعدادات
+        async function loadSettings() {
+            try {
+                const response = await fetch('api_settings.php?action=get_all');
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentState.siteSettings = data.data;
+                    
+                    // الإعدادات العامة
+                    const general = data.data.general || [];
+                    general.forEach(setting => {
+                        const element = document.getElementById(setting.setting_key);
+                        if (element) {
+                            element.value = setting.setting_value;
+                        }
+                    });
+                    
+                    // إعدادات البريد
+                    const email = data.data.email || [];
+                    email.forEach(setting => {
+                        const element = document.getElementById(setting.setting_key);
+                        if (element && setting.setting_key !== 'smtp_password') {
+                            element.value = setting.setting_value;
+                        }
+                    });
+                    
+                    // إعدادات التحميلات
+                    const uploads = data.data.uploads || [];
+                    uploads.forEach(setting => {
+                        const element = document.getElementById(setting.setting_key);
+                        if (element) {
+                            element.value = setting.setting_value;
+                        }
+                    });
+                    
+                    // تحديث التذييل
+                    updateFooter();
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل الإعدادات:', error);
+                showAlert('حدث خطأ في تحميل الإعدادات', 'error', 'settingsAlert');
+            }
+        }
+
+        // دالة لحفظ الإعدادات العامة
+        async function saveGeneralSettings(event) {
+            event.preventDefault();
+            
+            const settings = {
+                'site_name': document.getElementById('siteName').value,
+                'admin_email': document.getElementById('adminEmail').value,
+                'site_description': document.getElementById('siteDescription').value,
+                'contact_email': document.getElementById('contactEmail').value,
+                'items_per_page': document.getElementById('itemsPerPage').value
+            };
+            
+            await saveSettings(settings, 'general');
+        }
+
+        // دالة لحفظ إعدادات البريد
+        async function saveEmailSettings(event) {
+            event.preventDefault();
+            
+            const settings = {
+                'smtp_host': document.getElementById('smtpHost').value,
+                'smtp_port': document.getElementById('smtpPort').value,
+                'smtp_username': document.getElementById('smtpUsername').value,
+                'smtp_encryption': document.getElementById('smtpEncryption').value
+            };
+            
+            const password = document.getElementById('smtpPassword').value;
+            if (password) {
+                settings['smtp_password'] = password;
+            }
+            
+            await saveSettings(settings, 'email');
+        }
+
+        // دالة لحفظ إعدادات التحميلات
+        async function saveUploadSettings(event) {
+            event.preventDefault();
+            
+            const settings = {
+                'max_upload_size_app': document.getElementById('maxUploadSizeApp').value,
+                'max_upload_size_image': document.getElementById('maxUploadSizeImage').value,
+                'allowed_app_extensions': document.getElementById('allowedAppExtensions').value,
+                'allowed_image_extensions': document.getElementById('allowedImageExtensions').value
+            };
+            
+            await saveSettings(settings, 'uploads');
+        }
+
+        // دالة عامة لحفظ الإعدادات
+        async function saveSettings(settings, group) {
+            const formData = new FormData();
+            formData.append('settings', JSON.stringify(settings));
+            
+            const saveBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = saveBtn.innerHTML;
+            
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<span class="loading"></span> جاري الحفظ...';
+            
+            try {
+                const response = await fetch(`api_settings.php?action=update&group=${group}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('✅ تم حفظ الإعدادات بنجاح', 'success', 'settingsAlert');
+                    currentState.siteSettings[group] = settings;
+                    updateFooter();
+                } else {
+                    showAlert('❌ ' + data.message, 'error', 'settingsAlert');
+                }
+            } catch (error) {
+                console.error('خطأ في حفظ الإعدادات:', error);
+                showAlert('حدث خطأ في حفظ الإعدادات', 'error', 'settingsAlert');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalText;
+            }
+        }
+
+        // دالة لتحديث التذييل
+        function updateFooter() {
+            const siteName = currentState.siteSettings.general?.find(s => s.setting_key === 'site_name')?.setting_value || 'متجر برامجي';
+            const siteDescription = currentState.siteSettings.general?.find(s => s.setting_key === 'site_description')?.setting_value || '';
+            const adminEmail = currentState.siteSettings.general?.find(s => s.setting_key === 'admin_email')?.setting_value || 'admin@example.com';
+            
+            document.getElementById('footerSiteName').textContent = siteName;
+            document.getElementById('footerSiteDescription').textContent = siteDescription;
+            document.getElementById('footerEmail').textContent = adminEmail;
+        }
+
+        // دالة لتغيير كلمة المرور
+        async function changePassword(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showAlert('يرجى ملء جميع الحقول', 'error', 'passwordAlert');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showAlert('كلمتا المرور غير متطابقتين', 'error', 'passwordAlert');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showAlert('كلمة المرور يجب أن تكون على الأقل 6 أحرف', 'error', 'passwordAlert');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('current_password', currentPassword);
+            formData.append('new_password', newPassword);
+            formData.append('confirm_password', confirmPassword);
+            
+            const changeBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = changeBtn.innerHTML;
+            
+            changeBtn.disabled = true;
+            changeBtn.innerHTML = '<span class="loading"></span> جاري التغيير...';
+            
+            try {
+                const response = await fetch('api_auth.php?action=change_password', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('✅ تم تغيير كلمة المرور بنجاح', 'success', 'passwordAlert');
+                    document.getElementById('changePasswordForm').reset();
+                } else {
+                    showAlert('❌ ' + data.message, 'error', 'passwordAlert');
+                }
+            } catch (error) {
+                console.error('خطأ في تغيير كلمة المرور:', error);
+                showAlert('حدث خطأ في تغيير كلمة المرور', 'error', 'passwordAlert');
+            } finally {
+                changeBtn.disabled = false;
+                changeBtn.innerHTML = originalText;
+            }
+        }
+
+        // دالة لتسجيل الخروج
+        async function logout() {
+            if (!confirm('هل تريد حقاً تسجيل الخروج؟')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('api_auth.php?action=logout');
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.data.redirect || 'login.html';
+                }
+            } catch (error) {
+                console.error('خطأ في تسجيل الخروج:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        // دالة لتصدير البيانات
+        function exportApps() {
+            alert('خاصية تصدير البيانات ستكون متاحة قريباً');
+        }
+
+        // دالة لاختبار إعدادات البريد
+        async function testEmailSettings() {
+            alert('خاصية اختبار البريد الإلكتروني ستكون متاحة قريباً');
+        }
+
+        // تهيئة الصفحة
+        async function initAdminPanel() {
+            // التحقق من تسجيل الدخول
+            if (!await checkLogin()) {
+                return;
+            }
+            
+            // إعداد مستمعي الأحداث
+            setupEventListeners();
+            
+            // تحميل الإحصائيات
+            loadDashboardStats();
+            loadTopApps();
+            
+            // تحديث السنة
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // رسالة ترحيب
+            setTimeout(() => {
+                showAlert(`مرحباً ${currentState.currentUser.username} في لوحة تحكم برامج Windows`, 'success');
+            }, 1000);
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // القائمة الجانبية
+            document.querySelectorAll('.admin-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showAdminSection(sectionId);
+                });
+            });
+            
+            // زر تسجيل الخروج
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            
+            // زر إضافة برنامج
+            document.getElementById('addAppBtn').addEventListener('click', function() {
+                showAdminSection('addNewApp');
+                resetAppForm();
+            });
+            
+            // زر تحديث البيانات
+            document.getElementById('refreshDataBtn').addEventListener('click', function() {
+                loadDashboardStats();
+                loadTopApps();
+                loadApps();
+                showAlert('تم تحديث البيانات', 'success');
+            });
+            
+            // نموذج إضافة/تعديل البرنامج
+            document.getElementById('addAppForm').addEventListener('submit', saveApp);
+            
+            // زر إلغاء التعديل
+            document.getElementById('cancelEditBtn').addEventListener('click', function() {
+                resetAppForm();
+                showAdminSection('appsManagement');
+            });
+            
+            // معلومات الملف
+            document.getElementById('appFile').addEventListener('change', function(e) {
+                const fileInfo = document.getElementById('fileInfo');
+                const fileName = document.getElementById('fileName');
+                const fileSize = document.getElementById('fileSize');
+                
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    fileName.textContent = file.name;
+                    fileSize.textContent = `الحجم: ${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+                    fileInfo.style.display = 'block';
+                }
+            });
+            
+            // معاينة الصورة
+            document.getElementById('appImage').addEventListener('change', function(e) {
+                const imagePreview = document.getElementById('imagePreview');
+                
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imagePreview.innerHTML = `
+                            <img src="${e.target.result}" class="preview-image" alt="معاينة الصورة">
+                        `;
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.innerHTML = '';
+                }
+            });
+            
+            // تبويبات التحميلات
+            document.querySelectorAll('#downloads .tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع الأزرار
+                    document.querySelectorAll('#downloads .tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // إخفاء جميع المحتويات
+                    document.querySelectorAll('#downloads .tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // تفعيل الزر والمحتوى المحدد
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}Tab`).classList.add('active');
+                    
+                    // تحميل البيانات
+                    loadDownloads(tabId);
+                });
+            });
+            
+            // تبويبات الرسائل
+            document.querySelectorAll('#messages .tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab').replace('Messages', '');
+                    
+                    // إزالة النشاط من جميع الأزرار
+                    document.querySelectorAll('#messages .tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // إخفاء جميع المحتويات
+                    document.querySelectorAll('#messages .tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // تفعيل الزر والمحتوى المحدد
+                    this.classList.add('active');
+                    document.getElementById(`${this.getAttribute('data-tab')}Tab`).classList.add('active');
+                    
+                    // تحميل البيانات
+                    loadMessages(tabId);
+                });
+            });
+            
+            // تبويبات الإعدادات
+            document.querySelectorAll('#settings .tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع الأزرار
+                    document.querySelectorAll('#settings .tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // إخفاء جميع المحتويات
+                    document.querySelectorAll('#settings .tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // تفعيل الزر والمحتوى المحدد
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}Tab`).classList.add('active');
+                });
+            });
+            
+            // إظهار/إخفاء كلمة المرور
+            document.querySelectorAll('.toggle-password').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordField = document.getElementById(targetId);
+                    const icon = this.querySelector('i');
+                    
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordField.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            });
+            
+            // التحقق من تطابق كلمتي المرور
+            document.getElementById('confirmPassword')?.addEventListener('input', function() {
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = this.value;
+                const matchElement = document.getElementById('passwordMatch');
+                const matchOkElement = document.getElementById('passwordMatchOk');
+                
+                if (newPassword && confirmPassword) {
+                    if (newPassword === confirmPassword) {
+                        matchElement.style.display = 'none';
+                        matchOkElement.style.display = 'block';
+                    } else {
+                        matchElement.style.display = 'block';
+                        matchOkElement.style.display = 'none';
+                    }
+                }
+            });
+            
+            // النماذج
+            document.getElementById('generalSettingsForm')?.addEventListener('submit', saveGeneralSettings);
+            document.getElementById('emailSettingsForm')?.addEventListener('submit', saveEmailSettings);
+            document.getElementById('uploadSettingsForm')?.addEventListener('submit', saveUploadSettings);
+            document.getElementById('changePasswordForm')?.addEventListener('submit', changePassword);
+            document.getElementById('replyForm')?.addEventListener('submit', sendReply);
+            
+            // القائمة المتنقلة
+            document.getElementById('menuToggle').addEventListener('click', function() {
+                document.getElementById('mainNav').classList.toggle('active');
+            });
+            
+            // إغلاق التنبيهات
+            document.querySelectorAll('.close-alert').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.alert').style.display = 'none';
+                });
+            });
+            
+            // إغلاق النوافذ عند النقر خارجها
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+        }
+
+        // بدء التهيئة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', initAdminPanel);
+    </script>
+</body>
+</html>

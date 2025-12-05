@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حول المطور - متجر تطبيقاتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2977/2977985.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-content {
+            flex: 1;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* رأس الموقع */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 5px;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* رأس الصفحة */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.1;
+        }
+        
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* محتوى حول */
+        .about-section {
+            padding: 80px 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        .developer-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .developer-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .developer-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .developer-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.7));
+            z-index: 1;
+        }
+        
+        .developer-info {
+            padding: 20px;
+        }
+        
+        .developer-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .developer-info p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .skills {
+            margin-top: 30px;
+        }
+        
+        .skills h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #f1f8ff;
+            color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid #d1e8ff;
+            transition: all 0.3s;
+        }
+        
+        .skill-tag:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* قسم الإنجازات */
+        .achievements {
+            background-color: white;
+            padding: 60px 0;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .achievement-card {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--radius);
+            transition: transform 0.3s;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .achievement-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .achievement-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .achievement-card p {
+            color: #666;
+        }
+        
+        /* قسم فلسفة العمل */
+        .philosophy-section {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .philosophy-item {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .philosophy-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #f1f8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .philosophy-icon i {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+        
+        .philosophy-item h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            opacity: 0.8;
+            transition: all 0.3s;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            padding-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* العلامة المائية للمشرف */
+        .admin-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* زر القائمة المتنقلة */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* زر العودة للرئيسية */
+        .back-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* الإحصائيات الحقيقية */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 25px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        
+        .stat-item:nth-child(2) {
+            background: linear-gradient(135deg, var(--success-color), #27ae60);
+        }
+        
+        .stat-item:nth-child(3) {
+            background: linear-gradient(135deg, var(--accent-color), #c0392b);
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-item p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <!-- رأس الموقع -->
+        <header>
+            <div class="container header-container">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span id="siteName">متجر تطبيقاتي</span>
+                </div>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="apps.html">التطبيقات</a></li>
+                        <li><a href="about.html" class="active">حول</a></li>
+                        <li><a href="contact.html">اتصل بي</a></li>
+                    </ul>
+                    <div class="auth-buttons">
+                        <span class="admin-badge">المشرف</span>
+                        <a href="admin.html" class="btn btn-primary">
+                            <i class="fas fa-cog"></i> لوحة التحكم
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- رأس الصفحة -->
+        <section class="page-header">
+            <div class="container">
+                <h1 id="aboutTitle">حول المطور</h1>
+                <p id="aboutSubtitle">تعرف على المطور الشخصي وراء هذه التطبيقات المميزة</p>
+            </div>
+        </section>
+
+        <!-- قسم حول المطور -->
+        <section class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="developer-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="المطور مصعب" onerror="this.src='https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="developer-info">
+                        <h2 id="developerName">مرحباً، أنا مصعب</h2>
+                        <p id="developerBio1">أنا مطور تطبيقات مستقل متخصص في إنشاء تطبيقات مفيدة وجذابة. بدأت رحلتي في البرمجة منذ مدة، ومنذ ذلك الحين وأنا أعمل على تطوير مهاراتي وإنشاء تطبيقات تساعد الناس في حياتهم اليومية.</p>
+                        <p id="developerBio2">أؤمن بأن التكنولوجيا يجب أن تكون في خدمة الإنسان، لذلك أركز على تطوير تطبيقات عملية تسهل حياة المستخدمين وتحل مشاكل حقيقية يواجهونها.</p>
+                        <p id="developerBio3">كل تطبيق في هذا المتجر هو نتاج ساعات من العمل والتفكير والتطوير، وأفخر بأن كل تطبيق يحمل بصمتي الشخصية ويحقق قيمة حقيقية للمستخدمين.</p>
+                        
+                        <div class="skills">
+                            <h3>المهارات والخبرات</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">تطوير الويب</span>
+                                <span class="skill-tag">HTML5/CSS3</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">PHP/MySQL</span>
+                                <span class="skill-tag">تطوير التطبيقات</span>
+                                <span class="skill-tag">واجهة المستخدم</span>
+                                <span class="skill-tag">تجربة المستخدم</span>
+                                <span class="skill-tag">إدارة المشاريع</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الإحصائيات الحقيقية -->
+        <section class="about-section" style="padding-top: 0;">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 40px; color: var(--primary-color);">إنجازات الموقع</h2>
+                <div class="stats-container" id="siteStats">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                    <div class="stat-item">
+                        <h3 id="totalApps">0</h3>
+                        <p>تطبيق متاح</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="totalDownloads">0</h3>
+                        <p>تحميل إجمالي</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="totalUsers">0</h3>
+                        <p>مستخدم نشط</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم فلسفة العمل -->
+        <section class="philosophy-section">
+            <div class="container">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--primary-color);">فلسفتي في التطوير</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px;">
+                        أعتقد أن التطبيق الناجح ليس مجرد كود برمجي، بل هو حل لمشكلة حقيقية. لذلك أركز دائماً على:
+                    </p>
+                    <div class="philosophy-grid">
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>البساطة</h3>
+                            <p style="color: #666;">تصميم واجهات سهلة الاستخدام وبديهية للمستخدم</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3>الكفاءة</h3>
+                            <p style="color: #666;">أداء عالي واستهلاك منخفض للموارد</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>الأمان</h3>
+                            <p style="color: #666;">حماية بيانات المستخدمين وسرية المعلومات</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3>التحديث</h3>
+                            <p style="color: #666;">تحديث مستمر وتحسين مستمر للتطبيقات</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الإنجازات -->
+        <section class="achievements">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 50px; color: var(--primary-color);">إنجازاتي</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <i class="fas fa-code"></i>
+                        <h3 id="yearsExp">3+</h3>
+                        <p>سنوات من الخبرة في التطوير</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3 id="projectsCount">50+</h3>
+                        <p>مشروع مكتمل</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-users"></i>
+                        <h3 id="clientsCount">100+</h3>
+                        <p>عميل راضٍ</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-certificate"></i>
+                        <h3 id="certificatesCount">10+</h3>
+                        <p>شهادة احترافية</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="back-home">
+            <div class="container">
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> العودة للرئيسية
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 id="footerAboutTitle">عن المتجر</h3>
+                    <p id="footerAboutText">هذا الموقع هو المتجر الرسمي لتطبيقاتي التي قمت بتطويرها. أنا المطور الوحيد والمشرف على هذا الموقع.</p>
+                    <div class="social-links">
+                        <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="لينكدإن"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="جيت هاب"><i class="fab fa-github"></i></a>
+                        <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="apps.html"><i class="fas fa-mobile-alt"></i> التطبيقات</a></li>
+                        <li><a href="about.html"><i class="fas fa-user"></i> حول المطور</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بي</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">mossab.manager@gmail.com</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> الجمهورية الجزائرية الديمقراطية الشعبية</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span> <span id="footerSiteName">متجر تطبيقاتي</span>. تم التطوير بواسطتي.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة الصفحة عند تحميلها
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+            loadSiteSettings();
+            loadSiteStats();
+        });
+
+        // تهيئة الصفحة
+        function initPage() {
+            setupEventListeners();
+            updateYear();
+        }
+
+        // تحديث سنة حقوق النشر
+        function updateYear() {
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        }
+
+        // تحميل إعدادات الموقع
+        async function loadSiteSettings() {
+            try {
+                const response = await fetch('api_settings.php?action=get_site_info');
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تحديث عناصر الموقع
+                    const elements = {
+                        'siteName': data.data.site_name,
+                        'aboutTitle': 'حول المطور - ' + data.data.site_name,
+                        'aboutSubtitle': 'تعرف على المطور الشخصي وراء ' + data.data.site_name,
+                        'footerAboutTitle': 'عن ' + data.data.site_name,
+                        'footerAboutText': data.data.site_description || 'هذا الموقع هو المتجر الرسمي لتطبيقاتي التي قمت بتطويرها.',
+                        'footerEmail': data.data.contact_email || data.data.admin_email || 'mossab.manager@gmail.com',
+                        'footerSiteName': data.data.site_name
+                    };
+                    
+                    Object.keys(elements).forEach(elementId => {
+                        const element = document.getElementById(elementId);
+                        if (element && elements[elementId]) {
+                            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                                element.value = elements[elementId];
+                            } else {
+                                element.textContent = elements[elementId];
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل إعدادات الموقع:', error);
+            }
+        }
+
+        // تحميل إحصائيات الموقع
+        async function loadSiteStats() {
+            try {
+                const response = await fetch('api_apps.php?action=get_stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تحديث الإحصائيات
+                    const stats = data.data;
+                    
+                    // التطبيقات
+                    const totalAppsElement = document.getElementById('totalApps');
+                    if (totalAppsElement) {
+                        totalAppsElement.textContent = stats.total_apps || '0';
+                    }
+                    
+                    // التحميلات
+                    const totalDownloadsElement = document.getElementById('totalDownloads');
+                    if (totalDownloadsElement) {
+                        totalDownloadsElement.textContent = stats.total_downloads ? stats.total_downloads.toLocaleString() : '0';
+                    }
+                    
+                    // المستخدمين (محاكاة - يمكن تغييرها لاحقاً)
+                    const totalUsersElement = document.getElementById('totalUsers');
+                    if (totalUsersElement) {
+                        // محاكاة عدد المستخدمين بناءً على التحميلات
+                        const simulatedUsers = Math.floor((stats.total_downloads || 0) / 3) + 1;
+                        totalUsersElement.textContent = simulatedUsers.toLocaleString();
+                    }
+                    
+                    // تحديث الإنجازات بناءً على الإحصائيات
+                    updateAchievements(stats);
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل إحصائيات الموقع:', error);
+            }
+        }
+
+        // تحديث الإنجازات بناءً على الإحصائيات
+        function updateAchievements(stats) {
+            // سنوات الخبرة (محاكاة)
+            const yearsExpElement = document.getElementById('yearsExp');
+            if (yearsExpElement) {
+                const baseYears = 3;
+                const extraYears = Math.floor((stats.total_apps || 0) / 15);
+                yearsExpElement.textContent = (baseYears + extraYears) + '+';
+            }
+            
+            // عدد المشاريع
+            const projectsCountElement = document.getElementById('projectsCount');
+            if (projectsCountElement) {
+                const projects = (stats.total_apps || 0) + 10; // إضافة مشاريع أخرى
+                projectsCountElement.textContent = projects + '+';
+            }
+            
+            // عدد العملاء
+            const clientsCountElement = document.getElementById('clientsCount');
+            if (clientsCountElement) {
+                const clients = Math.floor((stats.total_downloads || 0) / 5) + 20;
+                clientsCountElement.textContent = clients + '+';
+            }
+            
+            // عدد الشهادات
+            const certificatesCountElement = document.getElementById('certificatesCount');
+            if (certificatesCountElement) {
+                const certificates = Math.floor((stats.total_apps || 0) / 5) + 5;
+                certificatesCountElement.textContent = certificates + '+';
+            }
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // زر القائمة المتنقلة
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                });
+            }
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // تحديث الإحصائيات كل 30 ثانية
+        setInterval(loadSiteStats, 30000);
+    </script>
+</body>
+</html>

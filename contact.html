@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بي - متجر تطبيقاتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2977/2977985.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-content {
+            flex: 1;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* رأس الموقع */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 5px;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary-color);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        /* رأس الصفحة */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.1;
+        }
+        
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* قسم الاتصال */
+        .contact-section {
+            padding: 80px 0;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .contact-info {
+            background-color: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f1f8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h3 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .contact-details p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .contact-details a {
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+        
+        .contact-details a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        /* نموذج الاتصال */
+        .contact-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-form h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* ساعات العمل */
+        .working-hours {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .working-hours h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            opacity: 0.8;
+            transition: all 0.3s;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            padding-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* العلامة المائية للمشرف */
+        .admin-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* زر القائمة المتنقلة */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* التنبيهات */
+        .alert {
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .close-alert {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-alert:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+        
+        /* زر العودة للرئيسية */
+        .back-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <!-- رأس الموقع -->
+        <header>
+            <div class="container header-container">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>متجر تطبيقاتي</span>
+                </div>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="apps.html">التطبيقات</a></li>
+                        <li><a href="about.html">حول</a></li>
+                        <li><a href="contact.html" class="active">اتصل بي</a></li>
+                    </ul>
+                    <div class="auth-buttons">
+                        <span class="admin-badge">المشرف</span>
+                        <a href="admin.html" class="btn btn-primary">
+                            <i class="fas fa-cog"></i> لوحة التحكم
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- رأس الصفحة -->
+        <section class="page-header">
+            <div class="container">
+                <h1>اتصل بي</h1>
+                <p>تواصل معي لأي استفسار أو طلب تطبيق مخصص</p>
+            </div>
+        </section>
+
+        <!-- قسم الاتصال -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-container">
+                    <!-- معلومات الاتصال -->
+                    <div class="contact-info">
+                        <h2>معلومات التواصل</h2>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>البريد الإلكتروني</h3>
+                                <p><a href="mailto:mossab.manager@gmail.com" id="adminEmail">mossab.manager@gmail.com</a></p>
+                                <p style="font-size: 0.9rem; color: #888; margin-top: 5px;">سأرد عليك خلال 24 ساعة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>العنوان</h3>
+                                <p>الجمهورية الجزائرية الديمقراطية الشعبية</p>
+                                <p style="font-size: 0.9rem; color: #888; margin-top: 5px;">أعمل عن بُعد وأستقبل الطلبات من كل أنحاء العالم</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links" style="margin-top: 30px; justify-content: flex-start;">
+                            <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+                            <a href="#" title="لينكدإن"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" title="جيت هاب"><i class="fab fa-github"></i></a>
+                            <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        
+                        <div class="working-hours">
+                            <h3>ساعات العمل</h3>
+                            <ul class="hours-list">
+                                <li>
+                                    <span>الأحد - الخميس</span>
+                                    <span>9:00 ص - 5:00 م</span>
+                                </li>
+                                <li>
+                                    <span>الجمعة</span>
+                                    <span>إجازة</span>
+                                </li>
+                                <li>
+                                    <span>السبت</span>
+                                    <span>10:00 ص - 2:00 م</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- نموذج الاتصال -->
+                    <div class="contact-form">
+                        <h2>أرسل لي رسالة</h2>
+                        
+                        <div id="formMessage" style="display: none;"></div>
+                        
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">اسمك *</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني *</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">الموضوع *</label>
+                                <select id="subject" class="form-control" required>
+                                    <option value="">اختر موضوع الرسالة</option>
+                                    <option value="استفسار عن تطبيق">استفسار عن تطبيق</option>
+                                    <option value="طلب تطبيق مخصص">طلب تطبيق مخصص</option>
+                                    <option value="مشكلة فنية">مشكلة فنية</option>
+                                    <option value="اقتراح تحسين">اقتراح تحسين</option>
+                                    <option value="أخرى">أخرى</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">الرسالة *</label>
+                                <textarea id="message" class="form-control" required placeholder="اكتب رسالتك هنا..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px;">
+                                    <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: var(--radius);">
+                            <h3 style="margin-bottom: 10px; color: var(--primary-color);">ملاحظة هامة</h3>
+                            <p style="color: #666; font-size: 0.9rem;">
+                                عند طلب تطبيق مخصص، يرجى وصف متطلباتك بدقة حتى أتمكن من تقديم سعر وتوقيت مناسبين للمشروع.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="back-home">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i> العودة للرئيسية
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن المتجر</h3>
+                    <p id="siteDescription">هذا الموقع هو المتجر الرسمي لتطبيقاتي التي قمت بتطويرها. أنا المطور الوحيد والمشرف على هذا الموقع.</p>
+                    <div class="social-links">
+                        <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="لينكدإن"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="جيت هاب"><i class="fab fa-github"></i></a>
+                        <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="apps.html"><i class="fas fa-mobile-alt"></i> التطبيقات</a></li>
+                        <li><a href="about.html"><i class="fas fa-user"></i> حول المطور</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بي</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-envelope"></i> <span id="footerEmail">mossab.manager@gmail.com</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> الجمهورية الجزائرية الديمقراطية الشعبية</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                        <i class="fas fa-clock"></i> الأحد - الخميس: 9 صباحاً - 5 مساءً
+                    </p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span> <span id="footerSiteName">متجر تطبيقاتي</span>. تم التطوير بواسطتي.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة الصفحة عند تحميلها
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+            loadSiteSettings();
+        });
+
+        // تهيئة الصفحة
+        function initPage() {
+            setupEventListeners();
+            updateYear();
+        }
+
+        // تحديث سنة حقوق النشر
+        function updateYear() {
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        }
+
+        // تحميل إعدادات الموقع
+        async function loadSiteSettings() {
+            try {
+                const response = await fetch('api_settings.php?action=get_site_info');
+                const data = await response.json();
+                
+                if (data.success) {
+                    // تحديث معلومات الاتصال
+                    const adminEmail = document.getElementById('adminEmail');
+                    const footerEmail = document.getElementById('footerEmail');
+                    const siteDescription = document.getElementById('siteDescription');
+                    const footerSiteName = document.getElementById('footerSiteName');
+                    
+                    if (data.data.contact_email) {
+                        if (adminEmail) adminEmail.textContent = data.data.contact_email;
+                        if (adminEmail) adminEmail.href = 'mailto:' + data.data.contact_email;
+                        if (footerEmail) footerEmail.textContent = data.data.contact_email;
+                    }
+                    
+                    if (data.data.site_description && siteDescription) {
+                        siteDescription.textContent = data.data.site_description;
+                    }
+                    
+                    if (data.data.site_name && footerSiteName) {
+                        footerSiteName.textContent = data.data.site_name;
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل إعدادات الموقع:', error);
+            }
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // زر القائمة المتنقلة
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                });
+            }
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                    }
+                });
+            });
+            
+            // نموذج الاتصال
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    sendMessage();
+                });
+            }
+        }
+
+        // إرسال الرسالة
+        async function sendMessage() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value.trim();
+            
+            // التحقق من صحة البيانات
+            if (!name || !email || !subject || !message) {
+                showMessage('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+            
+            // التحقق من صحة البريد الإلكتروني
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('يرجى إدخال بريد إلكتروني صحيح', 'error');
+                return;
+            }
+            
+            // إظهار رسالة التحميل
+            showMessage('جاري إرسال رسالتك...', 'info');
+            
+            try {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('email', email);
+                formData.append('subject', subject);
+                formData.append('message', message);
+                
+                const response = await fetch('api_messages.php?action=send', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('✅ ' + data.message, 'success');
+                    
+                    // تفريغ النموذج
+                    document.getElementById('contactForm').reset();
+                    
+                    // إخفاء رسالة النجاح بعد 5 ثوان
+                    setTimeout(() => {
+                        const formMessage = document.getElementById('formMessage');
+                        if (formMessage) {
+                            formMessage.style.display = 'none';
+                        }
+                    }, 5000);
+                } else {
+                    showMessage('❌ ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('خطأ في إرسال الرسالة:', error);
+                showMessage('❌ حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.', 'error');
+            }
+        }
+
+        // إظهار رسالة
+        function showMessage(text, type = 'info') {
+            const formMessage = document.getElementById('formMessage');
+            if (!formMessage) return;
+            
+            formMessage.textContent = text;
+            formMessage.className = 'alert';
+            formMessage.style.display = 'flex';
+            
+            if (type === 'success') {
+                formMessage.classList.add('alert-success');
+            } else if (type === 'error') {
+                formMessage.classList.add('alert-error');
+            } else {
+                formMessage.classList.add('alert-info');
+            }
+            
+            // إضافة زر الإغلاق إذا لم يكن موجوداً
+            if (!formMessage.querySelector('.close-alert')) {
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-alert';
+                closeBtn.innerHTML = '&times;';
+                closeBtn.addEventListener('click', function() {
+                    formMessage.style.display = 'none';
+                });
+                formMessage.appendChild(closeBtn);
+            }
+        }
+    </script>
+</body>
+</html>
