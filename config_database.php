@@ -1,9 +1,9 @@
 <?php
 // إعدادات قاعدة البيانات
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'app_store_db');
+define('DB_HOST', 'fdb32.awardspace.net');
+define('DB_USER', '4714901_my');
+define('DB_PASS', 'dL;X,s4o57@F2xRz');
+define('DB_NAME', '4714901_my');
 define('DB_CHARSET', 'utf8mb4');
 
 // إعدادات الموقع

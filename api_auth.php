@@ -1,6 +1,6 @@
 <?php
-require_once '../config/database.php';
-require_once '../config/functions.php';
+require_once 'config_database.php';
+require_once 'config_functions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -65,13 +65,13 @@ try {
                         'path' => '/',
                         'secure' => isset($_SERVER['HTTPS']),
                         'httponly' => true,
-                        'samesite' => 'Strict'
+                        'samesite' => 'Lax' // تم التعديل هنا
                     ]);
                 }
                 
                 // تسجيل النشاط
                 $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)");
-                $logStmt->execute([
+                $logStmt->execute([ 
                     $user['id'],
                     'login',
                     'تسجيل دخول ناجح',
@@ -89,13 +89,12 @@ try {
                         'email' => $user['email']
                     ]
                 ];
-                
             } else {
                 $response['message'] = 'اسم المستخدم أو كلمة المرور غير صحيحة';
                 
                 // تسجيل محاولة فاشلة
                 $logStmt = $db->prepare("INSERT INTO activity_logs (action, details, ip_address, user_agent) VALUES (?, ?, ?, ?)");
-                $logStmt->execute([
+                $logStmt->execute([ 
                     'failed_login',
                     'محاولة تسجيل دخول فاشلة للمستخدم: ' . $username,
                     $_SERVER['REMOTE_ADDR'],
@@ -108,7 +107,7 @@ try {
             // تسجيل النشاط
             if (isLoggedIn()) {
                 $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)");
-                $logStmt->execute([
+                $logStmt->execute([ 
                     $_SESSION['user_id'],
                     'logout',
                     'تسجيل خروج',
@@ -117,7 +116,8 @@ try {
                 ]);
             }
             
-            // تدمير الجلسة
+            // تدمير الجلسة بشكل صحيح
+            session_unset();
             session_destroy();
             
             // حذف كوكي تذكر الدخول
@@ -166,22 +166,21 @@ try {
                 $updateStmt = $db->prepare("UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?");
                 $updateStmt->execute([$token, $expiry, $user['id']]);
                 
-                // إرسال البريد الإلكتروني
-                if (sendPasswordResetEmail($email, $token)) {
-                    // تسجيل النشاط
-                    $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
-                    $logStmt->execute([
-                        $user['id'],
-                        'password_reset_request',
-                        'طلب إعادة تعيين كلمة المرور',
-                        $_SERVER['REMOTE_ADDR']
-                    ]);
-                    
-                    $response['success'] = true;
-                    $response['message'] = 'تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني';
-                } else {
-                    $response['message'] = 'حدث خطأ في إرسال البريد الإلكتروني';
-                }
+                // إرسال رابط إعادة التعيين بدلاً من إرسال بريد
+                $reset_link = SITE_URL . "reset_password.html?token=" . $token;
+                
+                // تسجيل النشاط
+                $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
+                $logStmt->execute([ 
+                    $user['id'],
+                    'password_reset_request',
+                    'طلب إعادة تعيين كلمة المرور',
+                    $_SERVER['REMOTE_ADDR']
+                ]);
+                
+                $response['success'] = true;
+                $response['message'] = 'تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني';
+                $response['data'] = ['reset_link' => $reset_link];
             } else {
                 $response['message'] = 'البريد الإلكتروني غير مسجل في النظام';
             }
@@ -226,7 +225,7 @@ try {
                 
                 // تسجيل النشاط
                 $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
-                $logStmt->execute([
+                $logStmt->execute([ 
                     $user['id'],
                     'password_reset',
                     'تم إعادة تعيين كلمة المرور',
@@ -285,7 +284,7 @@ try {
                 
                 // تسجيل النشاط
                 $logStmt = $db->prepare("INSERT INTO activity_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
-                $logStmt->execute([
+                $logStmt->execute([ 
                     $_SESSION['user_id'],
                     'password_change',
                     'تم تغيير كلمة المرور',
